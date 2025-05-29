@@ -1,1 +1,1 @@
-Join me as I build AI programs.
+My collection of AI programs

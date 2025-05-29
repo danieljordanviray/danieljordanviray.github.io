@@ -1,1 +1,1 @@
-My collection of AI programs
+My journey in building artificial intelligence

@@ -1,1 +1,1 @@
-Join me as a I build AI applications!
+My collection of AI applications

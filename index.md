@@ -1,1 +1,1 @@
-Welcome to Daniel's AI blog!
+Join me as a I build AI applications!

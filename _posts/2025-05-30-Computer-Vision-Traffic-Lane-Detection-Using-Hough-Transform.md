@@ -49,7 +49,7 @@ display_image(raw,"raw")
 
 
     
-![png](output_7_0.png)
+![png](/images/output_7_0.png)
     
 
 
@@ -63,7 +63,7 @@ display_image(hsv, "hsv")
 
 
     
-![png](output_8_0.png)
+![png](/images/output_8_0.png)
     
 
 
@@ -81,7 +81,7 @@ display_image(shadow_mask, "shadow_mask")
 
 
     
-![png](output_9_0.png)
+![png](/images/output_9_0.png)
     
 
 

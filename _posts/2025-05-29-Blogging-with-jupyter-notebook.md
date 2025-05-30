@@ -1,15 +1,15 @@
 # Blogging with Jupyter Notebooks for AI development
 
+#### Testing, testing... Is this thing on?
 
 ```python
-# hide_code
 print('Hello, World!')
 ```
 
     Hello, World!
     
 
-#### AI, what is 1+1?
+#### Hey Siri, what is 1+1?
 
 
 ```python
@@ -23,18 +23,16 @@ print('Hello, World!')
 
 
 
-#### AI, create a data frame and a line plot
+#### Hey Siri, create a data frame and a line plot.
 
 
 ```python
-# hide
 import matplotlib.pyplot as plt
 import pandas as pd
 ```
 
 
 ```python
-# hide
 pd.DataFrame({'a':[1,2], 'b':[3,4]})
 ```
 
@@ -82,7 +80,6 @@ pd.DataFrame({'a':[1,2], 'b':[3,4]})
 
 
 ```python
-# hide
 plt.plot([1,2])
 ```
 
@@ -99,7 +96,7 @@ plt.plot([1,2])
     
 
 
-#### AI, show me a picture of a robot.
+#### Hey Siri, show me a picture of a robot.
 
 
 ```python

@@ -23,7 +23,7 @@ print('Hello, World!')
 
 
 
-#### Alexa, create a data frame and a line plot.
+#### Alexa, create a sample data frame and a sample line plot.
 
 
 ```python

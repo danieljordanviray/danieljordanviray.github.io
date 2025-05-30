@@ -2,13 +2,7 @@
 
 
 ```python
-# hide
-# pip install nbdev
-```
-
-
-```python
-# hide
+# hide_code
 print('Hello, World!')
 ```
 

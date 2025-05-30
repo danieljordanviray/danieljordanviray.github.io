@@ -91,17 +91,12 @@ plt.plot([1,2])
 
 
 
-    
-![](/images/output_8_1.png)
+<img src="images/output_8_1.png" height="225">
     
 
 
 #### Hey Siri, show me a picture of a robot.
 
 
-```python
-# hide
-```
-
-![](/images/HONDA_ASIMO.jpg)
+<img src="images/HONDA_ASIMO.jpg" height="225">
 

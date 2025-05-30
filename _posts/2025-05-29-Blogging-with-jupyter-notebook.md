@@ -1,4 +1,4 @@
-# Blogging with Jupyter Notebooks for AI development
+## Blogging with Jupyter Notebooks for AI development
 
 #### Testing, testing... Is this thing on?
 

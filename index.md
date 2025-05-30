@@ -1,1 +1,1 @@
-My journey in building artificial intelligence
+On a mission to build artificial intelligence

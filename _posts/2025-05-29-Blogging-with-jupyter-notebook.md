@@ -9,7 +9,7 @@ print('Hello, World!')
     Hello, World!
     
 
-#### Hey Siri, what is 1+1?
+#### Alexa, what is 1+1?
 
 
 ```python
@@ -23,7 +23,7 @@ print('Hello, World!')
 
 
 
-#### Hey Siri, create a data frame and a line plot.
+#### Alexa, create a data frame and a line plot.
 
 
 ```python
@@ -91,11 +91,12 @@ plt.plot([1,2])
 
 
 
-![](images/output_8_1.png)
+    
+![](/images/output_8_1.png)
+    
 
 
-#### Hey Siri, show me a picture of a robot.
+#### Alexa, show me a picture of a robot.
 
 
-![](images/output_8_1.png)
-
+<img src="/images/HONDA_ASIMO.jpg" height="225px" />

@@ -1,3 +1,0 @@
-# AI Coming Soon...
-
-Hello, World!

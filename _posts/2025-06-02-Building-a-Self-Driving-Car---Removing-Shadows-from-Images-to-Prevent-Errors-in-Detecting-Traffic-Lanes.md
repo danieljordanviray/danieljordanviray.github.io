@@ -322,5 +322,3 @@ cv2.destroyAllWindows()
 ### Next steps
 
 In the next project, we will use the processed image to detect lane lines accurately. 
-
-![mov](/images/rsi_test_video.mov)

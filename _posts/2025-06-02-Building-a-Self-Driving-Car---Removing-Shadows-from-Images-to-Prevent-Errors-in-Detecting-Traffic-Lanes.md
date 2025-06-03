@@ -57,7 +57,7 @@ display_image(raw,"raw")
 
 
     
-![png](output_8_0.png)
+![png](/images/rsi_output_8_0.png)
     
 
 
@@ -81,7 +81,7 @@ display_image(hsv, "hsv")
 
 
     
-![png](output_12_0.png)
+![png](/images/rsi_output_12_0.png)
     
 
 
@@ -155,7 +155,7 @@ display_image(shadow_mask, "shadow_mask")
 
 
     
-![png](output_20_0.png)
+![png](/images/rsi_output_20_0.png)
     
 
 
@@ -178,7 +178,7 @@ display_image(non_shadow_mask, "non_shadow_mask")
 
 
     
-![png](output_22_0.png)
+![png](/images/rsi_output_22_0.png)
     
 
 
@@ -196,7 +196,7 @@ display_image(masked_image, "masked_image")
 
 
     
-![png](output_24_0.png)
+![png](/images/rsi_output_24_0.png)
     
 
 
@@ -214,7 +214,7 @@ display_image(gray, "gray")
 
 
     
-![png](output_26_0.png)
+![png](/images/rsi_output_26_0.png)
     
 
 
@@ -240,7 +240,7 @@ display_image(canny, "canny")
 
 
     
-![png](output_29_0.png)
+![png](/images/rsi_output_29_0.png)
     
 
 
@@ -319,3 +319,8 @@ while(cap.isOpened()):
 cap.release()
 cv2.destroyAllWindows()
 ```
+### Next steps
+
+In the next project, we will use the processed image to detect lane lines accurately. 
+
+![mov](/images/rsi_test_video.mov)

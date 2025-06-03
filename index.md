@@ -1,1 +1,1 @@
-On a mission to build artificial intelligence.
+On a mission to learn and build artificial intelligence.

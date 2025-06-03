@@ -7,12 +7,12 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: Daniel Jordan Viray's artificial intelligence projects
-description: -
+description: --
 github_username: danieljordanviray
 
 # Email and twitter are optional:
 email: d.j.viray@gmail.com
-# twitter_username:
+twitter_username:
 
 # Set this to true to get LaTeX math equation support
 use_math:

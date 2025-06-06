@@ -54,7 +54,7 @@ display_image(raw,"raw_image")
 
 
     
-![png](output_9_0.png)
+![png](/images/060625_output_9_0.png)
     
 
 
@@ -100,7 +100,7 @@ display_image(canny_image,"canny_image")
 
 
     
-![png](output_12_0.png)
+![png](/images/060625_output_12_0.png)
     
 
 
@@ -172,7 +172,7 @@ display_image(masked_image,"region_of_interest")
 
 
     
-![png](output_21_0.png)
+![png](/images/060625_output_21_0.png)
     
 
 
@@ -245,7 +245,7 @@ display_image(line_image,"line_image")
 
 
     
-![png](output_28_0.png)
+![png](/images/060625_output_28_0.png)
     
 
 
@@ -292,7 +292,7 @@ display_image(canny_img_w_lines,"canny_img_w_lines")
 
 
     
-![png](output_35_0.png)
+![png](/images/060625_output_35_0.png)
     
 
 
@@ -308,7 +308,7 @@ display_image(raw_w_lines,"raw_w_lines")
 
 
     
-![png](output_37_0.png)
+![png](/images/060625_output_37_0.png)
     
 
 
@@ -418,7 +418,7 @@ display_image(raw_w_avg_lines,"raw_w_avg_lines")
 
 
     
-![png](output_45_0.png)
+![png](/images/060625_output_45_0.png)
     
 
 

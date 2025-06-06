@@ -272,6 +272,8 @@ print("line img shape:", line_image.shape)
 
 ```python
 # overlay/blend canny image with lines images
+# Note: the addWeighted function combines pixels by output_pixel = weight1 * img1_pixel + weight2 * img2_pixel + gamma
+# So, since we use a black canvas for line_image, it becomes transparent in the overlayed/blended image
 canny_img_w_lines = cv2.addWeighted(cv2.cvtColor(canny_image, cv2.COLOR_GRAY2BGR), 0.75, line_image, 1, 1)
 ```
 
@@ -420,11 +422,11 @@ display_image(raw_w_avg_lines,"raw_w_avg_lines")
     
 ![png](/images/060625_output_45_0.png)
     
-
+And there we have it! We've detected the traffic lanes using the Hough Transform algorithm!
 
 #### Is Hough Transform Used in the Real-World? Limitations to Hough Transform
 
-Now, we have one line each for the left and right lane. However, notice that the right lane is not perfectly straight. It curves off towards the right in the image. 
+Now, we have one line each for the left and right lane. However, notice that the actual right traffic line is not perfectly straight in the image. It curves off towards the right up ahead. 
 
 This is a limitation of the Hough Transform algo, which predicts straight lines. If I were to extend the right Hough Transform line further into the image (or to infinity), it would veer off course. 
 
@@ -440,7 +442,7 @@ Here are other limitations to the Hough Transform, which is now rarely used in r
 
 #### Is the Hough Transform Algo Artifical Intelligence?
 
-For the record, this lane detection system is not AI. It is classical computer vision where we are actually hand-coding the rules-based algorithm. 
+For the record, this lane detection system is not AI. It is classical computer vision where we are actually hand-coding the rules-based program. 
 
 AI would be feeding the computer data and having the computer learn the rules itself for lane detection.
 

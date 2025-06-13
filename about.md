@@ -4,3 +4,6 @@ Daniel works professionally in data analytics and is interested in building arti
 
 <img src="images/screenshot_cropped_2.jpg" width="225">
 
+
+<img src="images/ai_headshot.png" width="225">
+[My AI-generated caricature]

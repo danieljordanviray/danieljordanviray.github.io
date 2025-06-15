@@ -1,5 +1,7 @@
 ### Building a Self-Driving Car - Lane Detection Using Hough Transform (Inferring Straight Lines in an Image)
 
+![png](/images/060625_output_37_0.png)
+
 *NB: Code adapted from Udemy's "The Complete Self-Driving Car Course - Applied Deep Learning course"*
 
 *NB: Some text and code generated with AI for speed and convenience.*

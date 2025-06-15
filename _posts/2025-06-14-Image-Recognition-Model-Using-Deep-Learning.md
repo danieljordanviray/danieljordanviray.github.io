@@ -18,22 +18,7 @@ fastbook.setup_book()
 from fastbook import *
 from fastai.vision.widgets import *
 ```
-
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m719.8/719.8 kB[0m [31m16.0 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m363.4/363.4 MB[0m [31m3.5 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m13.8/13.8 MB[0m [31m37.3 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m24.6/24.6 MB[0m [31m28.7 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m883.7/883.7 kB[0m [31m28.7 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m664.8/664.8 MB[0m [31m1.2 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m211.5/211.5 MB[0m [31m5.6 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m56.3/56.3 MB[0m [31m17.0 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m127.9/127.9 MB[0m [31m7.5 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m207.5/207.5 MB[0m [31m5.4 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m21.1/21.1 MB[0m [31m39.8 MB/s[0m eta [36m0:00:00[0m
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.6/1.6 MB[0m [31m65.2 MB/s[0m eta [36m0:00:00[0m
-    [?25hMounted at /content/gdrive
     
-
 ## Test image download function on a single image
 
 
@@ -67,7 +52,7 @@ def search_images_pixabay(term, max_results=100, api_key=None):
 ```python
 # search PixaBay images via API
 # return list of URLs
-API_KEY = "50843862-35909051b588ccd3839ed98f0"  # Replace with your actual key
+API_KEY = ""  # Replace with your actual key
 urls = search_images_pixabay("car", max_results=100, api_key=API_KEY)
 
 # check sample urls
@@ -111,34 +96,6 @@ dest = 'images/car.jpg'
 # use download_url function to download a single image in list to dest
 download_url(urls[1], dest)
 ```
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-<div>
-  <progress value='335872' class='' max='328466' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  102.25% [335872/328466 00:00&lt;00:00]
-</div>
-
 
 
 

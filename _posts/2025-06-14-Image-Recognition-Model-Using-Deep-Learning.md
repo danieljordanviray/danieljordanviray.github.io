@@ -1,5 +1,7 @@
 ## Image Recognition Model Using Deep Learning - Car, Cyclist, or Tree?
 
+![png](/images/061525output_42_0.png)
+
 I’m currently fascinated by the idea of building autonomus systems (e.g., cars, drones, robots, etc.). One key aspect to building autonomous systems is computer vision -- how to train a computer to see like a human does.
 
 Hence, this post documents my first hands-on attempt at building an image detection model using deep learning. My goal wasn’t to create a state-of-the-art system, but to get my feet wet—to understand what it actually takes to teach a model to “see.”
@@ -116,7 +118,7 @@ im.to_thumb(128,128)
 
 
     
-![png](output_11_0.png)
+![png](/images/061525output_11_0.png)
     
 
 
@@ -330,7 +332,7 @@ preview_images('car')
 
 
     
-![png](output_29_0.png)
+![png](/images/061525output_29_0.png)
     
 
 
@@ -342,7 +344,7 @@ preview_images('bike')
 
 
     
-![png](output_30_0.png)
+![png](/images/061525output_30_0.png)
     
 
 
@@ -354,7 +356,7 @@ preview_images('tree')
 
 
     
-![png](output_31_0.png)
+![png](/images/061525output_31_0.png)
     
 
 
@@ -406,7 +408,7 @@ dls.valid.show_batch(max_n=12, nrows=3)
 
 
     
-![png](output_42_0.png)
+![png](/images/061525output_42_0.png)
     
 
 
@@ -430,7 +432,7 @@ dls.train.show_batch(max_n=12, nrows=3, unique=True)
 
 
     
-![png](output_45_0.png)
+![png](/images/061525output_45_0.png)
     
 
 
@@ -451,7 +453,7 @@ dls.train.show_batch(max_n=12, nrows=3, unique=True)
 
 
     
-![png](output_47_0.png)
+![png](/images/061525output_47_0.png)
     
 
 
@@ -694,7 +696,7 @@ interp.plot_confusion_matrix()
 
 
     
-![png](output_59_4.png)
+![png](/images/061525output_59_4.png)
     
 
 
@@ -734,7 +736,7 @@ interp.plot_top_losses(6, nrows=2)
 
 
     
-![png](output_61_2.png)
+![png](/images/061525output_61_2.png)
     
 
 

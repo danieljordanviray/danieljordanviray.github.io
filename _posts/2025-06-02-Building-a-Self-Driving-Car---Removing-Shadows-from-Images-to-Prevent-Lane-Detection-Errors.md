@@ -1,5 +1,7 @@
 ### Building a Self-Driving Car - Removing Shadows from Images to Prevent Lane Detection Errors
 
+![png](/images/rsi_output_22_0.png)
+
 *NB: Code adapted from Udemy's "The Complete Self-Driving Car Course - Applied Deep Learning course"*
 
 *NB: Some text and code generated with AI for speed and convenience.*

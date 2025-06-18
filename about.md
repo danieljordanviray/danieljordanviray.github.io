@@ -9,3 +9,6 @@ And here is AI-generated me:
 
 <img src="images/ai_headshot.png" width="225">
 
+
+<img src="images/ai_stencil_headshot.png" width="225">
+

@@ -15,6 +15,8 @@ While creating my first traffic lane detection pipeline, I noticed that shadows 
 
 This prevents errors from the computer mistaking shadows for traffic lanes. We definitely would not want that happening in a self-driving car. 
 
+![jpg](/images/061825shadow_image.jpg)
+
 ### Raw image
 
 Here is the raw image we're working with (we'll evolve to videos later):

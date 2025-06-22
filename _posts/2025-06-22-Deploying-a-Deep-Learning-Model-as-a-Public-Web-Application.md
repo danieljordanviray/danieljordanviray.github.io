@@ -1,12 +1,13 @@
 ### Deploying a Deep Learning Model as a Public Web Application
 
+Objective here is to deploy a deep learning model onto the web using HuggingFace and Gradio. I've already trained a deep learning model (.pkl) on Google Colab and downloded it to my local env.
 
 ```python
 # import libraries
 from fastai.vision.all import *
 import gradio as gr
 ```
-
+Test that I can display downloaded sample images. These will be example images that feed into the model and web app:
 
 ```python
 # display image of car
@@ -95,7 +96,7 @@ im_flower
 ![png](/images/062225output_6_0.png)
     
 
-
+Import deep learning model:
 
 
 ```python
@@ -107,7 +108,7 @@ learn = load_learner('/content/drive/MyDrive/AI Projects/gradio_model_deployment
     If you only need to load model weights and optimizer state, use the safe `Learner.load` instead.
       warn("load_learner` uses Python's insecure pickle module, which can execute malicious arbitrary code when loading. Only load files you trust.\nIf you only need to load model weights and optimizer state, use the safe `Learner.load` instead.")
     
-
+Apply model on sample images to return probabilities of image classification:
 
 ```python
 learn.predict(im_car)
@@ -172,7 +173,7 @@ learn.predict(im_all)
 
     ('car', tensor(1), tensor([4.7532e-02, 9.5226e-01, 2.1252e-04]))
 
-
+Create function that applies model, for use in Gradio:
 
 
 ```python
@@ -218,7 +219,7 @@ classify_image(im_car)
      'tree': 6.191251067377834e-09}
 
 
-
+Build a web app interface using Gradio:
 
 ```python
 # build a simple image classification demo where a user can upload or click example images, and model predicts the label using classify_image() function
@@ -297,4 +298,5 @@ intf = gr.Interface(fn=classify_image, inputs=image, outputs=label, examples=exa
 # launch Gradio interface
 intf.launch(inline=False)
 ```
-    
+
+I downloaded the .py script locally and then pushed it to HuggingFace via Git.

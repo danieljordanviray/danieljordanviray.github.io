@@ -20,7 +20,7 @@ im_car
 
 
     
-![png](output_2_0.png)
+![png](/images/062225/output_2_0.png)
     
 
 
@@ -38,7 +38,7 @@ im_bike
 
 
     
-![png](output_3_0.png)
+![png](/images/062225/output_3_0.png)
     
 
 
@@ -56,7 +56,7 @@ im_tree
 
 
     
-![png](output_4_0.png)
+![png](/images/062225/output_4_0.png)
     
 
 
@@ -74,7 +74,7 @@ im_all
 
 
     
-![png](output_5_0.png)
+![png](/images/062225/output_5_0.png)
     
 
 
@@ -92,7 +92,7 @@ im_flower
 
 
     
-![png](output_6_0.png)
+![png](/images/062225/output_6_0.png)
     
 
 
@@ -390,58 +390,4 @@ intf = gr.Interface(fn=classify_image, inputs=image, outputs=label, examples=exa
 # launch Gradio interface
 intf.launch(inline=False)
 ```
-
-    Collecting nbdev
-      Downloading nbdev-2.4.2-py3-none-any.whl.metadata (10 kB)
-    Requirement already satisfied: packaging in /usr/local/lib/python3.11/dist-packages (from nbdev) (24.2)
-    Collecting fastcore>=1.8.0 (from nbdev)
-      Downloading fastcore-1.8.2-py3-none-any.whl.metadata (3.7 kB)
-    Collecting execnb>=0.1.12 (from nbdev)
-      Downloading execnb-0.1.14-py3-none-any.whl.metadata (3.6 kB)
-    Requirement already satisfied: astunparse in /usr/local/lib/python3.11/dist-packages (from nbdev) (1.6.3)
-    Collecting ghapi>=1.0.3 (from nbdev)
-      Downloading ghapi-1.0.6-py3-none-any.whl.metadata (13 kB)
-    Collecting watchdog (from nbdev)
-      Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl.metadata (44 kB)
-    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m44.3/44.3 kB[0m [31m2.0 MB/s[0m eta [36m0:00:00[0m
-    [?25hCollecting asttokens (from nbdev)
-      Downloading asttokens-3.0.0-py3-none-any.whl.metadata (4.7 kB)
-    Requirement already satisfied: setuptools in /usr/local/lib/python3.11/dist-packages (from nbdev) (75.2.0)
-    Requirement already satisfied: PyYAML in /usr/local/lib/python3.11/dist-packages (from nbdev) (6.0.2)
-    Requirement already satisfied: ipython in /usr/local/lib/python3.11/dist-packages (from execnb>=0.1.12->nbdev) (7.34.0)
-    Requirement already satisfied: wheel<1.0,>=0.23.0 in /usr/local/lib/python3.11/dist-packages (from astunparse->nbdev) (0.45.1)
-    Requirement already satisfied: six<2.0,>=1.6.1 in /usr/local/lib/python3.11/dist-packages (from astunparse->nbdev) (1.17.0)
-    Collecting jedi>=0.16 (from ipython->execnb>=0.1.12->nbdev)
-      Downloading jedi-0.19.2-py2.py3-none-any.whl.metadata (22 kB)
-    Requirement already satisfied: decorator in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (4.4.2)
-    Requirement already satisfied: pickleshare in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (0.7.5)
-    Requirement already satisfied: traitlets>=4.2 in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (5.7.1)
-    Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0 in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (3.0.51)
-    Requirement already satisfied: pygments in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (2.19.1)
-    Requirement already satisfied: backcall in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (0.2.0)
-    Requirement already satisfied: matplotlib-inline in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (0.1.7)
-    Requirement already satisfied: pexpect>4.3 in /usr/local/lib/python3.11/dist-packages (from ipython->execnb>=0.1.12->nbdev) (4.9.0)
-    Requirement already satisfied: parso<0.9.0,>=0.8.4 in /usr/local/lib/python3.11/dist-packages (from jedi>=0.16->ipython->execnb>=0.1.12->nbdev) (0.8.4)
-    Requirement already satisfied: ptyprocess>=0.5 in /usr/local/lib/python3.11/dist-packages (from pexpect>4.3->ipython->execnb>=0.1.12->nbdev) (0.7.0)
-    Requirement already satisfied: wcwidth in /usr/local/lib/python3.11/dist-packages (from prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0->ipython->execnb>=0.1.12->nbdev) (0.2.13)
-    Downloading nbdev-2.4.2-py3-none-any.whl (70 kB)
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m70.1/70.1 kB[0m [31m3.3 MB/s[0m eta [36m0:00:00[0m
-    [?25hDownloading execnb-0.1.14-py3-none-any.whl (13 kB)
-    Downloading fastcore-1.8.2-py3-none-any.whl (78 kB)
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m78.2/78.2 kB[0m [31m6.4 MB/s[0m eta [36m0:00:00[0m
-    [?25hDownloading ghapi-1.0.6-py3-none-any.whl (62 kB)
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m62.4/62.4 kB[0m [31m5.3 MB/s[0m eta [36m0:00:00[0m
-    [?25hDownloading asttokens-3.0.0-py3-none-any.whl (26 kB)
-    Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl (79 kB)
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m79.1/79.1 kB[0m [31m6.3 MB/s[0m eta [36m0:00:00[0m
-    [?25hDownloading jedi-0.19.2-py2.py3-none-any.whl (1.6 MB)
-    [2K   [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.6/1.6 MB[0m [31m27.8 MB/s[0m eta [36m0:00:00[0m
-    [?25hInstalling collected packages: watchdog, jedi, fastcore, asttokens, ghapi, execnb, nbdev
-      Attempting uninstall: fastcore
-        Found existing installation: fastcore 1.7.29
-        Uninstalling fastcore-1.7.29:
-          Successfully uninstalled fastcore-1.7.29
-    [31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-    fastai 2.7.19 requires fastcore<1.8,>=1.5.29, but you have fastcore 1.8.2 which is incompatible.[0m[31m
-    [0mSuccessfully installed asttokens-3.0.0 execnb-0.1.14 fastcore-1.8.2 ghapi-1.0.6 jedi-0.19.2 nbdev-2.4.2 watchdog-6.0.0
     

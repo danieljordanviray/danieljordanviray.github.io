@@ -1,3 +1,3 @@
 On a mission to learn and build artificial intelligence.
 
-Visit danieljordanviray.tech for a less-technical version of this blog.
+This is the technical version of the blog with code, linked to my Github.

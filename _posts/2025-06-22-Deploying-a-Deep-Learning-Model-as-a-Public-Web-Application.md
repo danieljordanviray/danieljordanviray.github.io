@@ -20,7 +20,7 @@ im_car
 
 
     
-![png](/images/062225/output_2_0.png)
+![png](/images/062225output_2_0.png)
     
 
 
@@ -38,7 +38,7 @@ im_bike
 
 
     
-![png](/images/062225/output_3_0.png)
+![png](/images/062225output_3_0.png)
     
 
 
@@ -56,7 +56,7 @@ im_tree
 
 
     
-![png](/images/062225/output_4_0.png)
+![png](/images/062225output_4_0.png)
     
 
 
@@ -74,7 +74,7 @@ im_all
 
 
     
-![png](/images/062225/output_5_0.png)
+![png](/images/062225output_5_0.png)
     
 
 
@@ -92,7 +92,7 @@ im_flower
 
 
     
-![png](/images/062225/output_6_0.png)
+![png](/images/062225output_6_0.png)
     
 
 
@@ -116,29 +116,6 @@ learn.predict(im_car)
 
 
 
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
-
-
-
 
 
     ('car', tensor(1), tensor([1.3583e-06, 1.0000e+00, 6.1913e-09]))
@@ -149,29 +126,6 @@ learn.predict(im_car)
 ```python
 learn.predict(im_bike)
 ```
-
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
-
-
-
-
-
 
 
 
@@ -186,23 +140,6 @@ learn.predict(im_bike)
 learn.predict(im_tree)
 ```
 
-
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
 
 
 
@@ -223,22 +160,6 @@ learn.predict(im_all)
 ```
 
 
-
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
 
 
 
@@ -281,21 +202,7 @@ classify_image(im_car)
 
 
 
-<style>
-    /* Turns off some styling */
-    progress {
-        /* gets rid of default border in Firefox and Opera. */
-        border: none;
-        /* Needs to be in here for Safari polyfill so background images work as expected. */
-        background-size: auto;
-    }
-    progress:not([value]), progress:not([value])::-webkit-progress-bar {
-        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
-    }
-    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-        background: #F44336;
-    }
-</style>
+
 
 
 

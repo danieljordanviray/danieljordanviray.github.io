@@ -1,4 +1,4 @@
-### Training an AI Model to Detect Emotions from Pictures of Faces
+### Training an AI Model to Detect Human Emotions from Pictures of Faces
 
 ### Abstract / Summary
 

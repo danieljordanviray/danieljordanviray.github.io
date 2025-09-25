@@ -139,8 +139,7 @@ plt.show()
 
 
     
-![png](092525-output_17_0.png)
-    
+![png](/images/092525-output_17_0.png)
 
 
 Check for and remove corrupt files: 
@@ -1645,7 +1644,7 @@ plt.figure(figsize=(10,10)); plt.imshow(grid.permute(1,2,0)); plt.axis('off') # 
 
 
     
-![png](092525-output_141_1.png)
+![png](/images/092525-output_141_1.png)
     
 
 
@@ -1719,7 +1718,7 @@ plt.figure(figsize=(10,10)); plt.imshow(grid.permute(1,2,0)); plt.axis('off')
 
 
     
-![png](092525-output_147_1.png)
+![png](/images/092525-output_147_1.png)
     
 
 
@@ -1782,12 +1781,12 @@ plt.show()
 
 
     
-![png](092525-output_149_2.png)
+![png](/images/092525-output_149_2.png)
     
 
 
 
     
-![png](092525-output_149_3.png)
+![png](/images/092525-output_149_3.png)
     
 

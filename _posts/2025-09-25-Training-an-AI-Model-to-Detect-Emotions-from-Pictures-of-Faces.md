@@ -1,5 +1,5 @@
 ### Training an AI Model to Detect Human Emotions from Pictures of Faces
-
+![png](/images/092525-output_147_1.png)
 ### Abstract / Summary
 
 Built my first hand-coded AI model (using PyTorch)! The model can detect human emotions from a picture of a face. 

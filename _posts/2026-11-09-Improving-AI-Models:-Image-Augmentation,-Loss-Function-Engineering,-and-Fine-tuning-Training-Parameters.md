@@ -1,5 +1,7 @@
 # Improving AI Models: Image Augmentation, Loss Function Engineering, and Fine-tuning Training Parameters
 
+![png](/images/110925-output_13_0.png)
+
 Just completed my next project in learning how to build and engineer AI systems! In this notebook, I built an AI model that classifies dog breeds from images with up to 95% accuracy. Technically, this project explores core AI-engineering optimization techniques: image augmentation, loss-function mathematics, and fine-tuning training parameters.
 
 ### Table of Contents
@@ -116,7 +118,7 @@ plt.show()
 
 
     
-![png](output_13_0.png)
+![png](/images/110925-output_13_0.png)
     
 
 
@@ -232,7 +234,7 @@ dls.train_ds[0][0] # index first tuple, first element in tuple (image)
 
 
     
-![png](output_26_0.png)
+![png](/images/110925-output_26_0.png)
     
 
 
@@ -283,7 +285,7 @@ dls.show_batch((xb, yb))
 
 
     
-![png](output_30_0.png)
+![png](/images/110925-output_30_0.png)
     
 
 
@@ -311,7 +313,7 @@ dls.show_batch((xb_valid, yb_valid), max_n=24, figsize=(8,8))
 
 
     
-![png](output_32_0.png)
+![png](/images/110925-output_32_0.png)
     
 
 
@@ -727,7 +729,7 @@ plot_function(torch.sigmoid, min=-4,max=4)
 
 
     
-![png](output_60_0.png)
+![png](/images/110925-output_60_0.png)
     
 
 
@@ -1010,7 +1012,7 @@ plot_function(torch.log, min=0,max=1, ty='log(x) (loss)', tx='x (probability)')
 
 
     
-![png](output_83_0.png)
+![png](/images/110925-output_83_0.png)
     
 
 
@@ -1031,7 +1033,7 @@ plot_function(lambda x: -1*torch.log(x), min=0,max=1, tx='x (probability)', ty='
 
 
     
-![png](output_85_0.png)
+![png](/images/110925-output_85_0.png)
     
 
 
@@ -1485,7 +1487,7 @@ interp.plot_confusion_matrix(figsize=(12,12), dpi=60)
 
 
     
-![png](output_121_4.png)
+![png](/images/110925-output_121_4.png)
     
 
 
@@ -1671,7 +1673,7 @@ lr_min,lr_steep = learn.lr_find(suggest_funcs=(minimum, steep))
 
 
     
-![png](output_129_2.png)
+![png](/images/110925-output_129_2.png)
     
 
 
@@ -1857,7 +1859,7 @@ learn.lr_find()
 
 
     
-![png](output_141_3.png)
+![png](/images/110925-output_141_3.png)
     
 
 
@@ -2153,7 +2155,7 @@ learn.recorder.plot_loss()
 
 
     
-![png](output_148_1.png)
+![png](/images/110925-output_148_1.png)
     
 
 

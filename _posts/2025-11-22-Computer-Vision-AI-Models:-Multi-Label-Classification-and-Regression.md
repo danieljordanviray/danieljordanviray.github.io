@@ -1,3 +1,5 @@
+![png](/images/112225/output_154_0.png)
+
 ```python
 ! pip install -Uqq fastbook
 import fastbook
@@ -393,7 +395,7 @@ x
 
 
     
-![png](output_40_0.png)
+![png](/images/112225/output_40_0.png)
     
 
 
@@ -608,7 +610,7 @@ dls.train.show_batch(nrows=3, ncols=3)
 
 
     
-![png](output_63_0.png)
+![png](/images/112225/output_63_0.png)
     
 
 
@@ -619,7 +621,7 @@ dls.valid.show_batch(nrows=3, ncols=3)
 
 
     
-![png](output_64_0.png)
+![png](/images/112225/output_64_0.png)
     
 
 
@@ -1552,7 +1554,7 @@ plt.plot(xs,accs);
 
 
     
-![png](output_132_0.png)
+![png](/images/112225/output_132_0.png)
     
 
 
@@ -1739,7 +1741,7 @@ im.to_thumb(160)
 
 
     
-![png](output_150_0.png)
+![png](/images/112225/output_150_0.png)
     
 
 
@@ -1786,7 +1788,7 @@ dls.show_batch(max_n=9, figsize=(8,6))
 
 
     
-![png](output_154_0.png)
+![png](/images/112225/output_154_0.png)
     
 
 
@@ -1931,7 +1933,7 @@ plot_function(partial(sigmoid_range,lo=-1,hi=1), min=-4, max=4)
 
 
     
-![png](output_168_1.png)
+![png](/images/112225/output_168_1.png)
     
 
 
@@ -2001,7 +2003,7 @@ learn.lr_find()
 
 
     
-![png](output_174_3.png)
+![png](/images/112225/output_174_3.png)
     
 
 

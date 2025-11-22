@@ -2163,6 +2163,6 @@ learn.show_results(ds_idx=1, nrows=3, figsize=(6,8))
 
 
     
-![png](/images/output_180_2.png)
+![png](/images/112225_output_180_2.png)
     
 

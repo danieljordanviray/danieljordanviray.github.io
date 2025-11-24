@@ -1,14 +1,5 @@
 # About
 
-Daniel works professionally in data analytics and is interested in building artificial intelligence.
+Daniel has been working professionally in data analytics since 2017. He now wants to leverage his skills in math and data to build artificial intelligence. Daniel holds bachelor's and master's degrees in economics from UCLA and Imperial College London.
 
-<img src="images/screenshot_cropped_2.jpg" width="225">
-
-
-And here is AI-generated me:
-
-<img src="images/ai_headshot.png" width="225">
-
-
-<img src="images/ai_stencil_headshot.png" width="225">
-
+<img src="images/Nov_2025_Headshot.jpg" width="225">

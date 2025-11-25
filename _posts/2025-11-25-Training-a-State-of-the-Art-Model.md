@@ -1,3 +1,5 @@
+![png](/images/112525_output_36_0.png)
+
 ```python
 ! pip install -Uqq fastbook
 import fastbook
@@ -678,7 +680,7 @@ show_image((0.3*tchurch + 0.7*tgas), ax=axs[2]);
 
 
     
-![png](output_36_0.png)
+![png](/images/112525_output_36_0.png)
     
 
 

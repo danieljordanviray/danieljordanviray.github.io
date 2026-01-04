@@ -1,3 +1,5 @@
+![png](/images/010426_output_137_0.png)
+
 ```python
 ! pip install -Uqq fastbook
 import fastbook
@@ -1091,7 +1093,7 @@ PILImage.create(files[0])
 
 
     
-![png](output_116_0.png)
+![png](/images/010426_output_116_0.png)
     
 
 
@@ -1109,7 +1111,7 @@ s.show();
 
 
     
-![png](output_118_0.png)
+![png](/images/010426_output_118_0.png)
     
 
 
@@ -1122,7 +1124,7 @@ PILImage.create(files[1])
 
 
     
-![png](output_119_0.png)
+![png](/images/010426_output_119_0.png)
     
 
 
@@ -1136,7 +1138,7 @@ s1.show();
 
 
     
-![png](output_120_0.png)
+![png](/images/010426_output_120_0.png)
     
 
 
@@ -1152,7 +1154,7 @@ s2.show();
 
 
     
-![png](output_122_0.png)
+![png](/images/010426_output_122_0.png)
     
 
 
@@ -1164,7 +1166,7 @@ s2.show();
 
 
     
-![png](output_123_0.png)
+![png](/images/010426_output_123_0.png)
     
 
 
@@ -1319,7 +1321,7 @@ tfm(files[0]).show();
 
 
     
-![png](output_135_0.png)
+![png](/images/010426_output_135_0.png)
     
 
 
@@ -1333,7 +1335,7 @@ show_at(tls.valid, 0);
 
 
     
-![png](output_137_0.png)
+![png](/images/010426_output_137_0.png)
     
 
 

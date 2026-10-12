@@ -5,7 +5,7 @@
 <meta property="og:title" content="Computer Vision AI Models: Multi-Label Classification and Regression &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="Beyond single labels: multi-label classification and regression for computer vision, on real image data.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/multi-label-classification-regression/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/multi-label-classification-regression/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -30,7 +30,7 @@ a { color: #1f6feb; }
 <div class="topnav"><a href="../../index.html">&larr; AI Fundamentals Lab</a></div>
 <h1>Computer Vision AI Models: Multi-Label Classification and Regression</h1>
 <p class="small">November 22, 2025 &middot; Computer Vision &middot; by Daniel Jordan Viray</p>
-<p><img alt="png" src="/images/112225_output_154_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_154_0.png" /></p>
 <pre><code class="language-python">! pip install -Uqq fastbook
 import fastbook
 fastbook.setup_book()
@@ -284,7 +284,7 @@ x,y = dsets.train[0]
 </code></pre>
 <pre><code class="language-python">x
 </code></pre>
-<p><img alt="png" src="/images/112225_output_40_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_40_0.png" /></p>
 <pre><code class="language-python">y
 </code></pre>
 <pre><code>TensorMultiCategory([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 1., 0., 0.])
@@ -395,10 +395,10 @@ dls = dblock.dataloaders(df)
 <p>Display sample images:</p>
 <pre><code class="language-python">dls.train.show_batch(nrows=3, ncols=3)
 </code></pre>
-<p><img alt="png" src="/images/112225_output_63_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_63_0.png" /></p>
 <pre><code class="language-python">dls.valid.show_batch(nrows=3, ncols=3)
 </code></pre>
-<p><img alt="png" src="/images/112225_output_64_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_64_0.png" /></p>
 <h4>Binary Cross-Entropy</h4>
 <p>Now time to create a Learner. </p>
 <p>Here is the pipeline:</p>
@@ -943,7 +943,7 @@ accuracy_multi(preds, targs, thresh=0.9, sigmoid=False)
 accs = [accuracy_multi(preds, targs, thresh=i, sigmoid=False) for i in xs]
 plt.plot(xs,accs);
 </code></pre>
-<p><img alt="png" src="/images/112225_output_132_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_132_0.png" /></p>
 <h3>Regression</h3>
 <p>Regresion is the same thing as classification, just that the outputs are numbers instead of categories.</p>
 <h4>Assemble the Data</h4>
@@ -1021,7 +1021,7 @@ im.shape
 </code></pre>
 <pre><code class="language-python">im.to_thumb(160)
 </code></pre>
-<p><img alt="png" src="/images/112225_output_150_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_150_0.png" /></p>
 <pre><code class="language-python">cal = np.genfromtxt(path/'01'/'rgb.cal', skip_footer=6)
 def get_ctr(f):
     ctr = np.genfromtxt(img2pose(f), skip_header=3)
@@ -1045,7 +1045,7 @@ def get_ctr(f):
 dls = biwi.dataloaders(path)
 dls.show_batch(max_n=9, figsize=(8,6))
 </code></pre>
-<p><img alt="png" src="/images/112225_output_154_0.png" /></p>
+<p><img alt="png" src="../../images/112225_output_154_0.png" /></p>
 <pre><code class="language-python">xb,yb = dls.one_batch()
 xb.shape,yb.shape
 </code></pre>
@@ -1109,7 +1109,7 @@ print(sig)
 <pre><code>/home/jhoward/anaconda3/lib/python3.7/site-packages/fastbook/__init__.py:55: UserWarning: Not providing a value for linspace's steps is deprecated and will throw a runtime error in a future release. This warning will appear only once per process. (Triggered internally at  /pytorch/aten/src/ATen/native/RangeFactories.cpp:23.)
   x = torch.linspace(min,max)
 </code></pre>
-<p><img alt="png" src="/images/112225_output_168_1.png" /></p>
+<p><img alt="png" src="../../images/112225_output_168_1.png" /></p>
 <p>Note: Why the partial function is needed:</p>
 <p>plot_function takes in three parameters only: (function f(x), x_min, x_max). </p>
 <p>Since plot_function only takes in f(x), we must fix the sigmoid_range() function with lo and hi parmeters. </p>
@@ -1142,7 +1142,7 @@ print(sig)
 
 <pre><code>SuggestedLRs(valley=0.0020892962347716093)
 </code></pre>
-<p><img alt="png" src="/images/112225_output_174_3.png" /></p>
+<p><img alt="png" src="../../images/112225_output_174_3.png" /></p>
 <p>Use LR of 1 x 10^-2.</p>
 <pre><code class="language-python">lr = 1e-2
 learn.fine_tune(3, lr)
@@ -1260,6 +1260,6 @@ learn.fine_tune(3, lr)
     }
 </style>
 
-<p><img alt="png" src="/images/112225_output_180_2.png" /></p>
+<p><img alt="png" src="../../images/112225_output_180_2.png" /></p>
 <footer>Built by an AI employee, reviewed by a human boss.</footer>
 </body></html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploying a Deep Learning Model as a Public Web Application &mdash; AI Fundamentals Lab</title>
+<meta property="og:title" content="Deploying a Deep Learning Model as a Public Web Application &mdash; AI Fundamentals Lab">
+<meta property="og:description" content="From notebook to the internet: deploying a trained deep learning model as a public web app with Hugging Face and Gradio.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://danieljordanviray.github.io/posts/deploying-deep-learning-web-app/">
+<meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+body { font-family: -apple-system, Georgia, serif; max-width: 720px; margin: 0 auto;
+       padding: 24px 18px; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.6em; } h2 { margin-top: 2em; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+h3 { margin-top: 1.6em; }
+.topnav { font-size: .85rem; margin: 0 0 1.2em; }
+.topnav a { color: #1f6feb; text-decoration: none; }
+img { max-width: 100%; height: auto; border-radius: 6px; }
+blockquote { border-left: 3px solid #ddd; margin-left: 0; padding-left: 1em; color: #555; }
+table { border-collapse: collapse; font-size: 0.88em; margin: 1em 0; display: block; overflow-x: auto; }
+th, td { border: 1px solid #ccc; padding: 6px 12px; text-align: left; }
+th { background: #f0f0f0; }
+.small { color: #555; font-size: 0.9em; }
+code { background: #f0f0f0; padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 0.82em; }
+pre code { background: none; padding: 0; }
+footer { margin-top: 3em; color: #888; font-size: 0.9em; border-top: 1px solid #ddd; padding-top: 1em; }
+a { color: #1f6feb; }
+</style></head><body>
+<div class="topnav"><a href="../../index.html">&larr; AI Fundamentals Lab</a></div>
+<h1>Deploying a Deep Learning Model as a Public Web Application</h1>
+<p class="small">June 22, 2025 &middot; Shipping Models &middot; by Daniel Jordan Viray</p>
+
+<p>Objective here is to deploy a deep learning model onto the web using HuggingFace and Gradio. I've already trained a deep learning model (.pkl) on Google Colab and downloded it to my local env.</p>
+<pre><code class="language-python"># import libraries
+from fastai.vision.all import *
+import gradio as gr
+</code></pre>
+<p>Test that I can display downloaded sample images. These will be example images that feed into the model and web app:</p>
+<pre><code class="language-python"># display image of car
+car_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/car.jpg'
+im_car = PILImage.create(car_path)
+im_car.thumbnail((192,192))
+im_car
+</code></pre>
+<p><img alt="png" src="/images/062225output_2_0.png" /></p>
+<pre><code class="language-python"># display image of bike
+bike_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/bike.jpg'
+im_bike = PILImage.create(bike_path)
+im_bike.thumbnail((192,192))
+im_bike
+</code></pre>
+<p><img alt="png" src="/images/062225output_3_0.png" /></p>
+<pre><code class="language-python"># display image of tree
+tree_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/tree.jpg'
+im_tree = PILImage.create(tree_path)
+im_tree.thumbnail((192,192))
+im_tree
+</code></pre>
+<p><img alt="png" src="/images/062225output_4_0.png" /></p>
+<pre><code class="language-python"># display image of all three - (i.e., ambigious)
+all_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/all.jpg'
+im_all = PILImage.create(all_path)
+im_all.thumbnail((192,192))
+im_all
+</code></pre>
+<p><img alt="png" src="/images/062225output_5_0.png" /></p>
+<pre><code class="language-python"># display image of flower
+flower_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/flower.jpg'
+im_flower = PILImage.create(flower_path)
+im_flower.thumbnail((192,192))
+im_flower
+</code></pre>
+<p><img alt="png" src="/images/062225output_6_0.png" /></p>
+<p>Import deep learning model:</p>
+<pre><code class="language-python"># import previously trained model (.pkl)
+learn = load_learner('/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/export.pkl')
+</code></pre>
+<pre><code>/usr/local/lib/python3.11/dist-packages/fastai/learner.py:455: UserWarning: load_learner` uses Python's insecure pickle module, which can execute malicious arbitrary code when loading. Only load files you trust.
+If you only need to load model weights and optimizer state, use the safe `Learner.load` instead.
+  warn("load_learner` uses Python's insecure pickle module, which can execute malicious arbitrary code when loading. Only load files you trust.\nIf you only need to load model weights and optimizer state, use the safe `Learner.load` instead.")
+</code></pre>
+<p>Apply model on sample images to return probabilities of image classification:</p>
+<pre><code class="language-python">learn.predict(im_car)
+# returns: ('prediction', 'tensor position', 'probability(bike, car, tree)')
+</code></pre>
+<pre><code>('car', tensor(1), tensor([1.3583e-06, 1.0000e+00, 6.1913e-09]))
+</code></pre>
+<pre><code class="language-python">learn.predict(im_bike)
+</code></pre>
+<pre><code>('bike', tensor(0), tensor([9.9999e-01, 7.5860e-06, 1.0868e-07]))
+</code></pre>
+<pre><code class="language-python">learn.predict(im_tree)
+</code></pre>
+<pre><code>('tree', tensor(2), tensor([0.1054, 0.0544, 0.8402]))
+</code></pre>
+<pre><code class="language-python">learn.predict(im_all)
+</code></pre>
+<pre><code>('car', tensor(1), tensor([4.7532e-02, 9.5226e-01, 2.1252e-04]))
+</code></pre>
+<p>Create function that applies model, for use in Gradio:</p>
+<pre><code class="language-python"># gradio wants dictionary of categories
+# and probablities associated with each one (must be float). Gradio cannot handle numpy or tensors
+categories = ('bike', 'car', 'tree')
+
+def classify_image(img):
+  pred, idx, probs = learn.predict(img)
+  return dict(zip(categories, map(float,probs)))
+
+# map(float, probs) converts the probabilities from tensors to plain Python floats (which are easier to work with or print).
+
+# zip(categories, ...) pairs each class label from your categories list (['bike', 'car', 'tree']) with the corresponding probability.
+
+# dict(...) turns those pairs into a dictionary.
+
+# So if the probabilities are [0.05, 0.90, 0.05], the return value will be:
+# {'bike': 0.05, 'car': 0.90, 'tree': 0.05}
+</code></pre>
+<pre><code class="language-python"># test classify_image() function
+classify_image(im_car)
+</code></pre>
+<pre><code>{'bike': 1.358293275188771e-06,
+ 'car': 0.9999986886978149,
+ 'tree': 6.191251067377834e-09}
+</code></pre>
+<p>Build a web app interface using Gradio:</p>
+<pre><code class="language-python"># build a simple image classification demo where a user can upload or click example images, and model predicts the label using classify_image() function
+
+# input PIL images
+image = gr.Image(height=250,width=250)
+
+# Create a label output component that displays the model's predictions.
+# It shows the predicted class and probabilities for all classes in a clean format.
+# Gradio parses the output from the classify_image() function, a dictionary of categories and probabilities
+label = gr.Label()
+
+# Add clickable examples to the interface.
+examples = [car_path, bike_path, tree_path, all_path, flower_path]
+
+# create gradio interface
+# fn=classify_image: The function to call when the user inputs an image.
+intf = gr.Interface(fn=classify_image, inputs=image, outputs=label, examples=examples)
+
+# launch Gradio interface
+intf.launch(inline=False)
+
+</code></pre>
+<pre><code>It looks like you are running Gradio on a hosted a Jupyter notebook. For the Gradio app to work, sharing must be enabled. Automatically setting `share=True` (you can turn this off by setting `share=False` in `launch()` explicitly).
+
+Colab notebook detected. To show errors in colab notebook, set debug=True in launch()
+* Running on public URL: https://96a9364e817450727a.gradio.live
+
+This share link expires in 1 week. For free permanent hosting and GPU upgrades, run `gradio deploy` from the terminal in the working directory to deploy to Hugging Face Spaces (https://huggingface.co/spaces)
+</code></pre>
+<p>Code needed to create script / app on HuggingFace:</p>
+<pre><code class="language-python"># import libraries
+from fastai.vision.all import *
+import gradio as gr
+
+# import previously trained model (.pkl)
+learn = load_learner('/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/export.pkl')
+
+# gradio wants dictionary of categories
+# and probablities associated with each one (must be float). Gradio cannot handle numpy or tensors
+categories = ('bike', 'car', 'tree')
+
+def classify_image(img):
+  pred, idx, probs = learn.predict(img)
+  return dict(zip(categories, map(float,probs)))
+
+# build a simple image classification demo where a user can upload or click example images, and model predicts the label using classify_image() function
+
+# input PIL images
+image = gr.Image(height=250,width=250)
+
+# Create a label output component that displays the model's predictions.
+# It shows the predicted class and probabilities for all classes in a clean format.
+# Gradio parses the output from the classify_image() function, a dictionary of categories and probabilities
+label = gr.Label()
+
+# Add clickable examples to the interface.
+examples = [car_path, bike_path, tree_path, all_path, flower_path]
+
+# create gradio interface
+# fn=classify_image: The function to call when the user inputs an image.
+intf = gr.Interface(fn=classify_image, inputs=image, outputs=label, examples=examples)
+
+# launch Gradio interface
+intf.launch(inline=False)
+</code></pre>
+<p>I downloaded the .py script locally and then pushed it to HuggingFace via Git.</p>
+<footer>Built by an AI employee, reviewed by a human boss.</footer>
+</body></html>

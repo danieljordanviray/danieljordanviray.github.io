@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Computer Vision AI Models: Multi-Label Classification and Regression &mdash; AI Fundamentals Lab</title>
+<meta property="og:title" content="Computer Vision AI Models: Multi-Label Classification and Regression &mdash; AI Fundamentals Lab">
+<meta property="og:description" content="Beyond single labels: multi-label classification and regression for computer vision, on real image data.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://danieljordanviray.github.io/posts/multi-label-classification-regression/">
+<meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+body { font-family: -apple-system, Georgia, serif; max-width: 720px; margin: 0 auto;
+       padding: 24px 18px; line-height: 1.7; color: #1a1a1a; }
+h1 { font-size: 1.6em; } h2 { margin-top: 2em; border-bottom: 1px solid #ddd; padding-bottom: 6px; }
+h3 { margin-top: 1.6em; }
+.topnav { font-size: .85rem; margin: 0 0 1.2em; }
+.topnav a { color: #1f6feb; text-decoration: none; }
+img { max-width: 100%; height: auto; border-radius: 6px; }
+blockquote { border-left: 3px solid #ddd; margin-left: 0; padding-left: 1em; color: #555; }
+table { border-collapse: collapse; font-size: 0.88em; margin: 1em 0; display: block; overflow-x: auto; }
+th, td { border: 1px solid #ccc; padding: 6px 12px; text-align: left; }
+th { background: #f0f0f0; }
+.small { color: #555; font-size: 0.9em; }
+code { background: #f0f0f0; padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 0.82em; }
+pre code { background: none; padding: 0; }
+footer { margin-top: 3em; color: #888; font-size: 0.9em; border-top: 1px solid #ddd; padding-top: 1em; }
+a { color: #1f6feb; }
+</style></head><body>
+<div class="topnav"><a href="../../index.html">&larr; AI Fundamentals Lab</a></div>
+<h1>Computer Vision AI Models: Multi-Label Classification and Regression</h1>
+<p class="small">November 22, 2025 &middot; Computer Vision &middot; by Daniel Jordan Viray</p>
+<p><img alt="png" src="/images/112225_output_154_0.png" /></p>
+<pre><code class="language-python">! pip install -Uqq fastbook
+import fastbook
+fastbook.setup_book()
+</code></pre>
+<pre><code class="language-python">from fastbook import *
+</code></pre>
+<h2>Abstract</h2>
+<p>This notebook covers two types of computer vision AI models: multi-label classification and regression. For the multi-label classification, I trained a model that can detect multiple categories (or none) from an image. For the regression model, I trained a model that can classify the center points of faces in images (i.e., predict point coordinates (numbers) from images). </p>
+
+<p>This notebook explores multi-label classification and regression computer vision AI models.</p>
+<ul>
+<li>Multi-level can include when object is more than one or none of the categories.</li>
+<li>Regression is when labels are numbers instead of fixed categories. </li>
+</ul>
+<h3>Multi-Label Classification</h3>
+<h4>The Data</h4>
+<p>Download data:</p>
+<pre><code class="language-python">from fastai.vision.all import *
+path = untar_data(URLs.PASCAL_2007)
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div>
+  <progress value='1637801984' class='' max='1637796771' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [1637801984/1637796771 00:22&lt;00:00]
+</div>
+
+<p>Check contents of path:</p>
+<pre><code class="language-python">path.ls()
+</code></pre>
+<pre><code>(#8) [Path('/root/.fastai/data/pascal_2007/test.json'),Path('/root/.fastai/data/pascal_2007/test.csv'),Path('/root/.fastai/data/pascal_2007/segmentation'),Path('/root/.fastai/data/pascal_2007/valid.json'),Path('/root/.fastai/data/pascal_2007/train'),Path('/root/.fastai/data/pascal_2007/test'),Path('/root/.fastai/data/pascal_2007/train.csv'),Path('/root/.fastai/data/pascal_2007/train.json')]
+</code></pre>
+<p>Read contents of path/train.csv via pandas df:</p>
+<p>Within the "train" data set, there is an is_valid column which if a flag for a validation data set.</p>
+<pre><code class="language-python">df = pd.read_csv(path/'train.csv')
+df.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fname</th>
+      <th>labels</th>
+      <th>is_valid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>000005.jpg</td>
+      <td>chair</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>000007.jpg</td>
+      <td>car</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>000009.jpg</td>
+      <td>horse person</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>000012.jpg</td>
+      <td>car</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>000016.jpg</td>
+      <td>bicycle</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>See contents of the test (holdout) data set:</p>
+<pre><code class="language-python">df_test = pd.read_csv(path/'test.csv')
+df_test.head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fname</th>
+      <th>labels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>000001.jpg</td>
+      <td>dog person</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>000002.jpg</td>
+      <td>train</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>000003.jpg</td>
+      <td>sofa chair</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>000004.jpg</td>
+      <td>car</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>000006.jpg</td>
+      <td>pottedplant diningtable chair</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Images are split into train and test data sets. Eg., 001-004 = valid, 005 = train, 006 = valid, 007 = train, etc.</p>
+<h4>Constructing a DataBlock</h4>
+<p>Problem: A DataFrame is basically just a table of information. But AI models train on mini-batches of tensors. 
+So we need a pipeline that transforms DataFrame -&gt; individual training items -&gt; mini-batches of tensors -&gt; DataLoaders (that feeds into AI model).</p>
+<p>The DataBlock API is fastAI's tool for constructing that pipeline.</p>
+<p>Defenitions:</p>
+<p>Dataset: A single tuple of (input data, output data/label)
+DataLoader: Mini-batch of tuples (input data, output data/labels) stacked into a tensor.</p>
+<p>Datasets: Training + Validation Dataset
+DataLoaders: Training + Validation Dataloader</p>
+<p>Construct a DataBlock:</p>
+<pre><code class="language-python">dblock = DataBlock()
+</code></pre>
+<p>The underlying code for a DataBlock looks something like this:</p>
+<pre><code class="language-python"># dblock = DataBlock(
+#     blocks=(input data type, output/label data type), # as blocks
+#     get_x = how to obtain the input data,
+#     get_y = how to obtain the input data),
+#     splitter = how to split the data into train and valid data sets # splits randomly by default
+# )
+</code></pre>
+<p>Construct DataSets by passing in DataFrame into DataBlock:</p>
+<pre><code class="language-python">dsets = dblock.datasets(df)
+</code></pre>
+<p>Check training + validation split of the datasets:</p>
+<pre><code class="language-python">len(dsets.train),len(dsets.valid)
+</code></pre>
+<pre><code>(4009, 1002)
+</code></pre>
+<pre><code class="language-python"># get x and y from train dataset
+x,y = dsets.train[0]
+</code></pre>
+<pre><code class="language-python">x
+</code></pre>
+<pre><code>fname       002844.jpg
+labels           train
+is_valid         False
+Name: 1427, dtype: object
+</code></pre>
+<pre><code class="language-python">y
+</code></pre>
+<pre><code>fname       002844.jpg
+labels           train
+is_valid         False
+Name: 1427, dtype: object
+</code></pre>
+<p>Note that the same row is returned twice, once for x and once for y. Because we haven't yet specificed of columns in the dataframe should be used for x and y yet.</p>
+<p>But we need to use 'fname' for x and 'labels' for y.</p>
+<pre><code class="language-python">def get_x(df): return df['fname']
+def get_y(df): return df['labels']
+
+dblock = DataBlock(get_x = get_x, get_y = get_y)
+</code></pre>
+<p>Now we will obtain tuples with (fname/input data, label/output data)</p>
+<pre><code class="language-python">dsets = dblock.datasets(df)
+x,y = dsets.train[0]
+x,y
+# note that dataset order can change
+</code></pre>
+<pre><code>('006162.jpg', 'aeroplane')
+</code></pre>
+<p>But we want the actual file path in the x element, and the (multiple) categories (as a list) in the y element:</p>
+<pre><code class="language-python">def get_x(r): return path/'train'/r['fname']
+def get_y(r): return r['labels'].split(' ') # turns categories separated by list into list, since there can be more than one category
+
+dblock = DataBlock(get_x = get_x, get_y = get_y)
+dsets = dblock.datasets(df)
+</code></pre>
+<pre><code class="language-python">x,y = dsets.train[4]
+x,y
+</code></pre>
+<pre><code>(Path('/root/.fastai/data/pascal_2007/train/001309.jpg'),
+ ['bicycle', 'person'])
+</code></pre>
+<p>For the blocks parameter, we now have to use ImageBlock for x, and MultiCategoryBlock for y (instead of CategroyBlock used previously, which only allows for one category):</p>
+<pre><code class="language-python">dblock = DataBlock(blocks=(ImageBlock, MultiCategoryBlock),
+                   get_x = get_x, get_y = get_y)
+
+dsets = dblock.datasets(df)
+x,y = dsets.train[0]
+</code></pre>
+<pre><code class="language-python">x, y
+</code></pre>
+<pre><code>(PILImage mode=RGB size=500x334,
+ TensorMultiCategory([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 1., 0., 0.]))
+</code></pre>
+<pre><code class="language-python">x
+</code></pre>
+<p><img alt="png" src="/images/112225_output_40_0.png" /></p>
+<pre><code class="language-python">y
+</code></pre>
+<pre><code>TensorMultiCategory([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 1., 0., 0.])
+</code></pre>
+<p>Note that for MultiCategoryBlock, the labels are one-hot encoded values. This is because PyTorch requires tensors that are all of the same length.</p>
+<p>Let’s check what the categories represent for this example (we are using the convenient <code>torch.where</code> function, which tells us all of the indices where our condition is true or false):</p>
+<pre><code class="language-python"># y element of first element in the train data set
+dsets.train[0][1]
+</code></pre>
+<pre><code>TensorMultiCategory([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 1., 0., 0.])
+</code></pre>
+<pre><code class="language-python"># position where category == 1 (in a tuple)
+torch.where(dsets.train[0][1]==1.)
+</code></pre>
+<pre><code>(TensorMultiCategory([14, 17]),)
+</code></pre>
+<pre><code class="language-python"># position where category == 1 (not in a tuple)
+torch.where(dsets.train[0][1]==1.)[0]
+</code></pre>
+<pre><code>TensorMultiCategory([14, 17])
+</code></pre>
+<pre><code class="language-python">idxs = torch.where(dsets.train[0][1]==1.)[0]
+</code></pre>
+<pre><code class="language-python">dsets.train.vocab[idxs]
+</code></pre>
+<pre><code>(#2) ['person','sofa']
+</code></pre>
+<p>Therefore, the image above is classified as a 'person' and as a 'sofa'.</p>
+<p>Full list of categories:</p>
+<pre><code class="language-python">dsets.train.vocab
+</code></pre>
+<pre><code>['aeroplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus', 'car', 'cat', 'chair', 'cow', 'diningtable', 'dog', 'horse', 'motorbike', 'person', 'pottedplant', 'sheep', 'sofa', 'train', 'tvmonitor']
+</code></pre>
+<p>How many total possible categories are there?</p>
+<pre><code class="language-python">len(dsets.train.vocab)
+</code></pre>
+<pre><code>20
+</code></pre>
+<p>Now we must tell the data block to use the is_valid column in the DataFrame to create the training and validation set:</p>
+<pre><code class="language-python">df['is_valid']
+</code></pre>
+<pre><code>0        True
+1        True
+2        True
+3       False
+4        True
+        ...  
+5006     True
+5007     True
+5008     True
+5009    False
+5010    False
+Name: is_valid, Length: 5011, dtype: bool
+</code></pre>
+<pre><code class="language-python">df.index[df['is_valid']]
+</code></pre>
+<pre><code>Int64Index([   0,    1,    2,    4,    6,    7,    8,   10,   12,   18,
+            ...
+            4992, 4994, 4995, 4997, 5002, 5003, 5005, 5006, 5007, 5008],
+           dtype='int64', length=2510)
+</code></pre>
+<pre><code class="language-python"># Output index of df[is_valid] == True as list 
+# df.index[df['is_valid']].tolist()
+</code></pre>
+<pre><code class="language-python">def splitter(df):
+    train = df.index[~df['is_valid']].tolist()
+    valid = df.index[df['is_valid']].tolist()
+    return train,valid
+
+dblock = DataBlock(blocks=(ImageBlock, MultiCategoryBlock),
+                   splitter=splitter,
+                   get_x=get_x, 
+                   get_y=get_y)
+
+dsets = dblock.datasets(df)
+</code></pre>
+<p>Ensure all items in in the tensor are the same size using the item_tfms parameter in the DataBlock:</p>
+<pre><code class="language-python">dblock = DataBlock(blocks=(ImageBlock, MultiCategoryBlock),
+                   splitter=splitter,
+                   get_x=get_x, 
+                   get_y=get_y,
+                   item_tfms = RandomResizedCrop(128, min_scale=0.35))
+
+dls = dblock.dataloaders(df)
+</code></pre>
+<pre><code class="language-python"># note: consolidated code for ease of running notebook
+from fastai.vision.all import *
+path = untar_data(URLs.PASCAL_2007)
+
+df = pd.read_csv(path/'train.csv')
+
+def get_x(r): return path/'train'/r['fname']
+def get_y(r): return r['labels'].split(' ') # turns categories separated by list into list, since there can be more than one category
+
+def splitter(df):
+    train = df.index[~df['is_valid']].tolist()
+    valid = df.index[df['is_valid']].tolist()
+    return train,valid
+
+dblock = DataBlock(blocks=(ImageBlock, MultiCategoryBlock),
+                   splitter=splitter,
+                   get_x=get_x, 
+                   get_y=get_y,
+                   item_tfms = RandomResizedCrop(128, min_scale=0.35))
+
+dls = dblock.dataloaders(df)
+</code></pre>
+<p>Display sample images:</p>
+<pre><code class="language-python">dls.train.show_batch(nrows=3, ncols=3)
+</code></pre>
+<p><img alt="png" src="/images/112225_output_63_0.png" /></p>
+<pre><code class="language-python">dls.valid.show_batch(nrows=3, ncols=3)
+</code></pre>
+<p><img alt="png" src="/images/112225_output_64_0.png" /></p>
+<h4>Binary Cross-Entropy</h4>
+<p>Now time to create a Learner. </p>
+<p>Here is the pipeline:</p>
+<pre><code>- DataFrame -&gt;
+
+- DataBlock (instructions to create the DataSet) -&gt;
+
+- DataSet (create the DataSet from the DataFrame and the DataBlock) -&gt;
+
+- DataLoaders (batch the data into tensors; what's actually fed into the model) -&gt;
+
+- Learner (ties everything togehter - DataLoaders, model, loss function, and optimizer)
+</code></pre>
+<pre><code class="language-python">learn = vision_learner(dls, resnet18)
+</code></pre>
+<pre><code>/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and will be removed in 0.15, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth
+
+
+
+  0%|          | 0.00/44.7M [00:00&lt;?, ?B/s]
+</code></pre>
+<ul>
+<li>
+<p>"vision_learner" is a constructor function that builds a "learn" object from the "Learner" class. </p>
+</li>
+<li>
+<p>Inside the "Learner" class is an "attribute" called "model", which stores an "object" of a class inherited from "nn.Module". "nn.Module is a class inside the "Torch.nn" module.</p>
+</li>
+</ul>
+<p>Reminder on Python object-oriented programming:</p>
+<ul>
+<li>
+<p>Module = file or folder where Python code is stored (classes, function, variables, imports, etc.). (eg., Torch.nn)</p>
+</li>
+<li>
+<p>Class = Code that is a blueprint for how to create an object. Class contains attributes and methods. A class can inherit properties from other classes. (e.g., nn.Module is class inside the Torch.nn module). How to MyClass can inherit nn.Module: MyClass(nn.Module)</p>
+</li>
+<li>
+<p>Object = instantiations of a class. object = Class("Attribute 1", Attribute 2", ... "Attribute N")</p>
+</li>
+<li>
+<p>Attributes = properties of the object (data stored inside the object). Accessed by object.attributeN</p>
+</li>
+<li>
+<p>Methods = functions of the object. Accessed by object.method1()</p>
+</li>
+</ul>
+<p>A model in a Learner is generally an object of a class inheriting from nn.Module.</p>
+<p>For example, </p>
+<p>Assume </p>
+<p>class MyModel(nn.Module):
+    ...</p>
+<p>Then</p>
+<p>model = MyModel(). (Instantiate an object called model from the class MyModel, which inherits from nn.Module).</p>
+<p>nn.Module defines the method <strong>call</strong>(). <strong>call</strong>() internally calls the forward() method. 
+So model() runs a forward pass. model() is equivalent to calling model.forward().</p>
+<p>In order words, model(x) is equivalent to:</p>
+<p>model.<strong>call</strong>(x) -&gt; self.forward(x)</p>
+<p>The output of model() are the logits/activations after last linear layer. The input needed is a batch of images.</p>
+<pre><code class="language-python"># obtain one batch from the dataloader
+x,y = to_cpu(dls.train.one_batch())
+</code></pre>
+<pre><code class="language-python"># rank-4 tensor
+# 64 images, 3 channels, 128 px width, 128 px height
+x.shape
+</code></pre>
+<pre><code>torch.Size([64, 3, 128, 128])
+</code></pre>
+<pre><code class="language-python"># rank-2 tensor
+# 64 images, # 20 one-hot encoded values for each possible category
+y.shape
+</code></pre>
+<pre><code>torch.Size([64, 20])
+</code></pre>
+<pre><code class="language-python"># pass in the x training data into the learn.model attribute:
+activs = learn.model(x)
+activs.shape
+</code></pre>
+<pre><code>torch.Size([64, 20])
+</code></pre>
+<p>Just to check my understanding of object oriented programming: If we call the forward() method on the learn.model attribute, this code should technically work too:</p>
+<pre><code class="language-python">activs2 = learn.model.forward(x)
+</code></pre>
+<pre><code class="language-python">activs2.shape
+</code></pre>
+<pre><code>torch.Size([64, 20])
+</code></pre>
+<p>Shape of activs is [64,20]: 64 images, 20 output activations (1 for each category)</p>
+<pre><code class="language-python">activs
+</code></pre>
+<pre><code>TensorBase([[-2.5558,  2.1472, -2.5053,  ..., -2.1701,  0.0803,  1.0482],
+            [ 0.8308, -0.8742, -4.7118,  ..., -0.1774,  1.0111,  0.9486],
+            [ 1.8041, -0.1436,  1.2294,  ...,  0.9958, -1.3756,  2.0860],
+            ...,
+            [ 1.0353, -1.5721, -0.3221,  ..., -0.0846, -3.1744, -4.8055],
+            [-1.1449, -0.3568,  2.8999,  ..., -2.0029, -2.1397,  2.3484],
+            [-0.4028, -1.5145, -1.8233,  ...,  3.1094, -0.5331,  0.8925]], grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python">activs[0]
+</code></pre>
+<pre><code>TensorBase([-2.5558,  2.1472, -2.5053,  2.7883, -0.2558, -0.2013, -5.5989, -0.9003,  1.8540,  3.0913,  1.3639,  1.5072,  1.6457,  3.0107,  2.0574, -5.6158, -1.4452, -2.1701,  0.0803,  1.0482],
+           grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<p>Now we have to scale the activations between 0 and 1 using the Sigmoid function. And then calculate the loss of each sigmoid(activation) = predicted probability, which is:</p>
+<ul>
+<li>
+<p>If the target/label is Class 1, use the output sigmoid(activation) = predicted probability.</p>
+</li>
+<li>
+<p>If the target/label is Class 0, use the inverse of the sigmoid(activation) = predicted probability. </p>
+</li>
+</ul>
+<p>Think of it like this: All of the output predicted probabilities are whether the image/data belongs to Class 1. If we take 1 - P(Class 1), that equals the predicted P(Class 0) in the case of Binary Cross Entropy.</p>
+<pre><code class="language-python"># calculate the sigmoid of activations to obtain a predicted probablity (scaled between 0 and 1)
+inputs = activs.sigmoid()
+inputs.shape
+</code></pre>
+<pre><code>torch.Size([64, 20])
+</code></pre>
+<pre><code class="language-python"># for the first image, these are all the probabilities that the first image is categorized as the nth category.
+inputs[0]
+</code></pre>
+<pre><code>TensorBase([0.0720, 0.8954, 0.0755, 0.9420, 0.4364, 0.4499, 0.0037, 0.2890, 0.8646, 0.9565, 0.7964, 0.8187, 0.8383, 0.9531, 0.8867, 0.0036, 0.1907, 0.1025, 0.5201, 0.7404], grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python"># and these are the actual labels of the image(s)
+targets = y
+targets.shape
+</code></pre>
+<pre><code>torch.Size([64, 20])
+</code></pre>
+<pre><code class="language-python">targets[0]
+</code></pre>
+<pre><code>TensorMultiCategory([0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.])
+</code></pre>
+<p>We can now use the torch.where function to say: </p>
+<p>Give me a tensor that gives the predicted probability of the correct class.</p>
+<pre><code class="language-python"># torch.where(condition, a, b)
+# if condition is true, choose a, else choose b
+torch.where(targets[0]==1, inputs[0], 1-inputs[0])
+</code></pre>
+<pre><code>TensorMultiCategory([0.9280, 0.1046, 0.9245, 0.0580, 0.5636, 0.5501, 0.9963, 0.2890, 0.1354, 0.0435, 0.2036, 0.1813, 0.1617, 0.0469, 0.1133, 0.9964, 0.8093, 0.8975, 0.4799, 0.2596],
+                    grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python"># for all 64 images in the mini-batch
+torch.where(targets==1, inputs, 1-inputs)
+</code></pre>
+<pre><code>TensorMultiCategory([[0.9280, 0.1046, 0.9245,  ..., 0.8975, 0.4799, 0.2596],
+                     [0.3035, 0.7056, 0.9911,  ..., 0.5442, 0.2668, 0.2792],
+                     [0.1414, 0.5358, 0.2263,  ..., 0.2698, 0.7983, 0.1105],
+                     ...,
+                     [0.2621, 0.8281, 0.5798,  ..., 0.5211, 0.9599, 0.9919],
+                     [0.7586, 0.5883, 0.0522,  ..., 0.8811, 0.8947, 0.0872],
+                     [0.5994, 0.8197, 0.8610,  ..., 0.0427, 0.6302, 0.2906]], grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python"># take log
+torch.where(targets==1, inputs, 1-inputs).log()
+</code></pre>
+<pre><code>TensorMultiCategory([[-0.0748, -2.2577, -0.0785,  ..., -0.1081, -0.7341, -1.3487],
+                     [-1.1925, -0.3487, -0.0089,  ..., -0.6084, -1.3214, -1.2759],
+                     [-1.9565, -0.6239, -1.4859,  ..., -1.3102, -0.2253, -2.2030],
+                     ...,
+                     [-1.3392, -0.1886, -0.5450,  ..., -0.6517, -0.0410, -0.0082],
+                     [-0.2763, -0.5306, -2.9535,  ..., -0.1266, -0.1113, -2.4397],
+                     [-0.5119, -0.1988, -0.1497,  ..., -3.1531, -0.4617, -1.2359]], grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python"># take mean (and negative)
+-torch.where(targets==1, inputs, 1-inputs).log().mean()
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<p>Put into a function (i.e., binary_cross_entropy):</p>
+<pre><code class="language-python">def binary_cross_entropy(inputs, targets):
+    inputs = inputs.sigmoid()
+    return -torch.where(targets==1, inputs, 1-inputs).log().mean()
+</code></pre>
+<pre><code class="language-python">binary_cross_entropy(activs, y)
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<p>PyTorch has these calculations built in:</p>
+<p>F.binary_cross_entropy_with_logits() as a function, or </p>
+<p>nn.BCEWithLogitsLoss() as a class.</p>
+<pre><code class="language-python"># PyTorch function version of binary_cross_entropy_with_logits (pass in logits, function takes sigmoid and binary cross-entropy)
+F.binary_cross_entropy_with_logits(activs, y)
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<p>Also works by creating an object of class nn.BCEWithLogitsLoss()</p>
+<pre><code class="language-python"># instantiate an object
+lossObject = nn.BCEWithLogitsLoss()
+</code></pre>
+<p>If you call an object, you're actually calling an object's .<strong>call</strong>() method, which internally redirects it to the .forward() method.</p>
+<p>So either of these code snippets would work:</p>
+<pre><code class="language-python">lossObject(activs, y)
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python">lossObject.__call__(activs,y)
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python">lossObject.forward(activs,y)
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python">lossObject = nn.BCEWithLogitsLoss()
+loss = lossObject(activs,y)
+loss
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python"># fastAI's code
+loss_func = nn.BCEWithLogitsLoss()
+loss = loss_func(activs, y)
+loss
+</code></pre>
+<pre><code>TensorMultiCategory(1.0901, grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<h4>Calculating Accuracy for Multi-Category Classification</h4>
+<pre><code class="language-python">activs
+</code></pre>
+<pre><code>TensorBase([[-2.5558,  2.1472, -2.5053,  ..., -2.1701,  0.0803,  1.0482],
+            [ 0.8308, -0.8742, -4.7118,  ..., -0.1774,  1.0111,  0.9486],
+            [ 1.8041, -0.1436,  1.2294,  ...,  0.9958, -1.3756,  2.0860],
+            ...,
+            [ 1.0353, -1.5721, -0.3221,  ..., -0.0846, -3.1744, -4.8055],
+            [-1.1449, -0.3568,  2.8999,  ..., -2.0029, -2.1397,  2.3484],
+            [-0.4028, -1.5145, -1.8233,  ...,  3.1094, -0.5331,  0.8925]], grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python">activs.sigmoid()
+</code></pre>
+<pre><code>TensorBase([[0.0720, 0.8954, 0.0755,  ..., 0.1025, 0.5201, 0.7404],
+            [0.6965, 0.2944, 0.0089,  ..., 0.4558, 0.7332, 0.7208],
+            [0.8586, 0.4642, 0.7737,  ..., 0.7302, 0.2017, 0.8895],
+            ...,
+            [0.7379, 0.1719, 0.4202,  ..., 0.4789, 0.0401, 0.0081],
+            [0.2414, 0.4117, 0.9478,  ..., 0.1189, 0.1053, 0.9128],
+            [0.4006, 0.1803, 0.1390,  ..., 0.9573, 0.3698, 0.7094]], grad_fn=&lt;AliasBackward0&gt;)
+</code></pre>
+<pre><code class="language-python">activs.argmax(dim=-1)
+</code></pre>
+<pre><code>TensorBase([ 9, 15, 14, 18, 12,  6,  7, 19, 13,  8,  4,  5,  0, 11, 17, 12,  2,  5,  2, 17, 16, 16, 18,  7,  4, 10,  1,  8, 12,  6, 11, 14,  3,  4,  8,  5,  4, 15,  8, 18,  7, 17,  8,  5,  9, 17, 16,
+             7, 11,  7, 15,  5,  9, 15, 13, 19,  1, 10, 13, 12, 14, 13, 15,  9])
+</code></pre>
+<pre><code class="language-python"># argmax gives index/position of largest activation (from 0 to 19) for each of the 64 images
+activs.argmax(dim=-1).shape
+
+# min(activs.argmax(dim=-1)) = 0
+# max(activs.argmax(dim=-1)) = 19
+</code></pre>
+<pre><code>torch.Size([64])
+</code></pre>
+<p>But we can't use this because the labels are one hot encoded values. So, we have to use code like this:</p>
+<pre><code class="language-python">def accuracy_multi(inp, targ, thresh=0.5, sigmoid=True): # sigmoid = False means you're passing in activations that have been scaled from 0 to 1 (probability) already
+    &quot;Compute accuracy when `inp` and `targ` are the same size.&quot;
+    if sigmoid: inp = inp.sigmoid() # if sigmoid = True, then you've passed in raw activation numbers and want to apply the sigmoid function to scale it
+    return ((inp&gt;thresh)==targ.bool()).float().mean() # convert sigmoid into a boolean and compare it to the one-hot encoded output booleans
+</code></pre>
+<p>Explanation of code:</p>
+<pre><code class="language-python"># apply sigmoid function to raw activation and compare to threshold value
+(activs.sigmoid()&gt;0.5)
+</code></pre>
+<pre><code>TensorBase([[False,  True, False,  ..., False,  True,  True],
+            [ True, False, False,  ..., False,  True,  True],
+            [ True, False,  True,  ...,  True, False,  True],
+            ...,
+            [ True, False, False,  ..., False, False, False],
+            [False, False,  True,  ..., False, False,  True],
+            [False, False, False,  ...,  True, False,  True]])
+</code></pre>
+<pre><code class="language-python"># convert one-hot encoded labels into boolean values
+y.bool()
+</code></pre>
+<pre><code>TensorMultiCategory([[False, False, False,  ..., False, False, False],
+                     [False, False, False,  ..., False, False, False],
+                     [False, False, False,  ..., False, False, False],
+                     ...,
+                     [False, False, False,  ..., False, False, False],
+                     [False, False, False,  ..., False, False, False],
+                     [False, False, False,  ..., False, False, False]])
+</code></pre>
+<pre><code class="language-python"># compare predictions in bools to output in bools
+(activs.sigmoid()&gt;0.5) == y.bool()
+</code></pre>
+<pre><code>TensorMultiCategory([[ True, False,  True,  ...,  True, False, False],
+                     [False,  True,  True,  ...,  True, False, False],
+                     [False,  True, False,  ..., False,  True, False],
+                     ...,
+                     [False,  True,  True,  ...,  True,  True,  True],
+                     [ True,  True, False,  ...,  True,  True, False],
+                     [ True,  True,  True,  ..., False,  True, False]])
+</code></pre>
+<pre><code class="language-python"># convert back to binary
+((activs.sigmoid()&gt;0.5) == y.bool()).float()
+</code></pre>
+<pre><code>TensorMultiCategory([[1., 0., 1.,  ..., 1., 0., 0.],
+                     [0., 1., 1.,  ..., 1., 0., 0.],
+                     [0., 1., 0.,  ..., 0., 1., 0.],
+                     ...,
+                     [0., 1., 1.,  ..., 1., 1., 1.],
+                     [1., 1., 0.,  ..., 1., 1., 0.],
+                     [1., 1., 1.,  ..., 0., 1., 0.]])
+</code></pre>
+<pre><code class="language-python"># take average to calculate overall accuracy of all output labels
+((activs.sigmoid()&gt;0.5) == y.bool()).float().mean()
+</code></pre>
+<pre><code>TensorMultiCategory(0.4953)
+</code></pre>
+<h4>Side Bar: Partial Function in Python</h4>
+<p>partial creates a new function by taking an existing function and pre-filling some of its arguments. In practice, it lets you set or override parameters without modifying the original function.</p>
+<pre><code class="language-python">learn = vision_learner(dls, resnet50, metrics=partial(accuracy_multi, thresh=0.2))
+learn.fine_tune(3, base_lr=3e-3, freeze_epochs=4)
+# 3 -&gt; model is trained for three epochs after unfreezing
+# base_lr -&gt; (small LR) fast ai uses as base LR when model is unfrozen
+# freeze_epochs = 4 -&gt; while deeper layers are frozen, the head of the model is trained for 4 epochs
+</code></pre>
+<pre><code>/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=ResNet50_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet50_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/resnet50-0676ba61.pth" to /root/.cache/torch/hub/checkpoints/resnet50-0676ba61.pth
+
+
+
+  0%|          | 0.00/97.8M [00:00&lt;?, ?B/s]
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy_multi</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.940322</td>
+      <td>0.682794</td>
+      <td>0.239482</td>
+      <td>00:14</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.822085</td>
+      <td>0.559675</td>
+      <td>0.280139</td>
+      <td>00:07</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.605149</td>
+      <td>0.206609</td>
+      <td>0.805259</td>
+      <td>00:07</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.360031</td>
+      <td>0.128224</td>
+      <td>0.938406</td>
+      <td>00:08</td>
+    </tr>
+  </tbody>
+</table>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>accuracy_multi</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.136172</td>
+      <td>0.119242</td>
+      <td>0.944542</td>
+      <td>00:09</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.118625</td>
+      <td>0.106792</td>
+      <td>0.951833</td>
+      <td>00:08</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.099672</td>
+      <td>0.102982</td>
+      <td>0.951036</td>
+      <td>00:08</td>
+    </tr>
+  </tbody>
+</table>
+
+<pre><code class="language-python">learn.metrics = partial(accuracy_multi, thresh=0.1)
+learn.validate()
+
+# learn.validation returns [loss, accuracy]
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<pre><code>(#2) [0.10298168659210205,0.9299801588058472]
+</code></pre>
+<p>Example with a very high threshold:</p>
+<pre><code class="language-python">learn.metrics = partial(accuracy_multi, thresh=0.99)
+learn.validate()
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<pre><code>(#2) [0.10298168659210205,0.944482147693634]
+</code></pre>
+<p>Note that loss stays the same because it is based on output logits/activations, not threshold values (for accuracy).</p>
+<p>Also, the reason why accuracy doesn't change much, even though the threshold changes a lot, is probably because a lot of the labels are 0. So, if we predict mostly or all 0s regardless, we are going to have a very high accuracy.</p>
+<p>Finding the best treshold value:</p>
+<pre><code class="language-python"># runs model on the validation set and returns outputs/activations (not passed through sigmoid) and ground truth label of images
+preds,targs = learn.get_preds()
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<pre><code class="language-python">preds
+# note: this is sigmoid output, between 0 and 1; it's just written in scientific notation
+</code></pre>
+<pre><code>TensorBase([[1.5553e-03, 6.3385e-03, 1.9329e-03,  ..., 1.1745e-01, 1.6353e-03, 1.2071e-01],
+            [4.9378e-04, 3.8260e-02, 2.1064e-03,  ..., 1.0799e-02, 2.6341e-03, 8.6064e-04],
+            [4.4051e-03, 4.8635e-02, 4.7389e-03,  ..., 1.5659e-02, 2.1874e-03, 2.9807e-03],
+            ...,
+            [2.1651e-03, 1.8047e-03, 3.4390e-04,  ..., 3.7651e-03, 7.7739e-03, 1.6341e-02],
+            [2.2145e-02, 1.2535e-02, 6.7369e-03,  ..., 1.5051e-03, 3.6266e-02, 8.4769e-03],
+            [1.9921e-03, 9.9490e-01, 7.8717e-03,  ..., 5.6084e-03, 4.6701e-04, 1.3730e-02]])
+</code></pre>
+<pre><code class="language-python">preds.shape
+</code></pre>
+<pre><code>torch.Size([2510, 20])
+</code></pre>
+<pre><code class="language-python">targs
+</code></pre>
+<pre><code>tensor([[0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        ...,
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 0., 0.,  ..., 0., 0., 0.],
+        [0., 1., 0.,  ..., 0., 0., 0.]])
+</code></pre>
+<pre><code class="language-python">targs.shape
+</code></pre>
+<pre><code>torch.Size([2510, 20])
+</code></pre>
+<pre><code class="language-python"># compute accuracy at a threshold of 0.9
+# don't apply the sigmoid function again since get_preds() already applies the sigmoid function
+accuracy_multi(preds, targs, thresh=0.9, sigmoid=False)
+</code></pre>
+<pre><code>TensorBase(0.9578)
+</code></pre>
+<p>Plot different threshold values to find which threshold leads to the highest accuracy. Note that the curve is smooth, so there is no overfitting or memorizing of the data.</p>
+<pre><code class="language-python">xs = torch.linspace(0.05,0.95,29) # create a vector from 0.05 to 0.95 with 29 steps evenly spaced
+accs = [accuracy_multi(preds, targs, thresh=i, sigmoid=False) for i in xs]
+plt.plot(xs,accs);
+</code></pre>
+<p><img alt="png" src="/images/112225_output_132_0.png" /></p>
+<h3>Regression</h3>
+<p>Regresion is the same thing as classification, just that the outputs are numbers instead of categories.</p>
+<h4>Assemble the Data</h4>
+<p>Get data:</p>
+<pre><code class="language-python">path = untar_data(URLs.BIWI_HEAD_POSE)
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div>
+  <progress value='452321280' class='' max='452316199' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [452321280/452316199 00:07&lt;00:00]
+</div>
+
+<pre><code class="language-python">#hide
+Path.BASE_PATH = path
+</code></pre>
+<pre><code class="language-python">path.ls().sorted()
+</code></pre>
+<pre><code>(#50) [Path('01'),Path('01.obj'),Path('02'),Path('02.obj'),Path('03'),Path('03.obj'),Path('04'),Path('04.obj'),Path('05'),Path('05.obj')...]
+</code></pre>
+<pre><code class="language-python">(path/'01').ls().sorted()
+</code></pre>
+<pre><code>(#1000) [Path('01/depth.cal'),Path('01/frame_00003_pose.txt'),Path('01/frame_00003_rgb.jpg'),Path('01/frame_00004_pose.txt'),Path('01/frame_00004_rgb.jpg'),Path('01/frame_00005_pose.txt'),Path('01/frame_00005_rgb.jpg'),Path('01/frame_00006_pose.txt'),Path('01/frame_00006_rgb.jpg'),Path('01/frame_00007_pose.txt')...]
+</code></pre>
+<pre><code class="language-python">img_files = get_image_files(path)
+def img2pose(x): return Path(f'{str(x)[:-7]}pose.txt')
+img2pose(img_files[0])
+</code></pre>
+<pre><code>Path('20/frame_00043_pose.txt')
+</code></pre>
+<pre><code class="language-python">img_files = get_image_files(path)
+img_files.sorted()
+</code></pre>
+<pre><code>(#15678) [Path('01/frame_00003_rgb.jpg'),Path('01/frame_00004_rgb.jpg'),Path('01/frame_00005_rgb.jpg'),Path('01/frame_00006_rgb.jpg'),Path('01/frame_00007_rgb.jpg'),Path('01/frame_00008_rgb.jpg'),Path('01/frame_00009_rgb.jpg'),Path('01/frame_00010_rgb.jpg'),Path('01/frame_00011_rgb.jpg'),Path('01/frame_00012_rgb.jpg')...]
+</code></pre>
+<pre><code class="language-python">img_files[0]
+</code></pre>
+<pre><code>Path('20/frame_00043_rgb.jpg')
+</code></pre>
+<pre><code class="language-python">str(img_files[0])
+</code></pre>
+<pre><code>'/root/.fastai/data/biwi_head_pose/20/frame_00043_rgb.jpg'
+</code></pre>
+<pre><code class="language-python">str(img_files[0])[:-7]
+</code></pre>
+<pre><code>'/root/.fastai/data/biwi_head_pose/20/frame_00043_'
+</code></pre>
+<pre><code class="language-python">f'{str(img_files[0])[:-7]}pose.txt'
+</code></pre>
+<pre><code>'/root/.fastai/data/biwi_head_pose/20/frame_00043_pose.txt'
+</code></pre>
+<pre><code class="language-python">Path(f'{str(img_files[0])[:-7]}pose.txt')
+</code></pre>
+<pre><code>Path('20/frame_00043_pose.txt')
+</code></pre>
+<p>Let's take a look at our first image:</p>
+<pre><code class="language-python">im = PILImage.create(img_files[0])
+im.shape
+</code></pre>
+<pre><code>(480, 640)
+</code></pre>
+<pre><code class="language-python">im.to_thumb(160)
+</code></pre>
+<p><img alt="png" src="/images/112225_output_150_0.png" /></p>
+<pre><code class="language-python">cal = np.genfromtxt(path/'01'/'rgb.cal', skip_footer=6)
+def get_ctr(f):
+    ctr = np.genfromtxt(img2pose(f), skip_header=3)
+    c1 = ctr[0] * cal[0][0]/ctr[2] + cal[0][2]
+    c2 = ctr[1] * cal[1][1]/ctr[2] + cal[1][2]
+    return tensor([c1,c2])
+</code></pre>
+<pre><code class="language-python">get_ctr(img_files[0])
+</code></pre>
+<pre><code>tensor([301.2149, 280.5131])
+</code></pre>
+<pre><code class="language-python">biwi = DataBlock(
+    blocks=(ImageBlock, PointBlock),
+    get_items=get_image_files,
+    get_y=get_ctr,
+    splitter=FuncSplitter(lambda o: o.parent.name=='13'),
+    batch_tfms=aug_transforms(size=(240,320)), 
+)
+</code></pre>
+<pre><code class="language-python"># dls = DataBlock.DataLoaders(DataFrame)
+dls = biwi.dataloaders(path)
+dls.show_batch(max_n=9, figsize=(8,6))
+</code></pre>
+<p><img alt="png" src="/images/112225_output_154_0.png" /></p>
+<pre><code class="language-python">xb,yb = dls.one_batch()
+xb.shape,yb.shape
+</code></pre>
+<pre><code>(torch.Size([64, 3, 240, 320]), torch.Size([64, 1, 2]))
+</code></pre>
+<pre><code class="language-python">xb.shape
+# 64 images, 3 channels (R,G,B), 240px height, 320px width
+</code></pre>
+<pre><code>torch.Size([64, 3, 240, 320])
+</code></pre>
+<pre><code class="language-python">yb.shape
+# 64 images, 1 point, 2 coordinates
+# e.g., [[x1,y1]]
+# there could be multiple points identified per image (e.g., [[x1,y1],[x2,y2]])
+</code></pre>
+<pre><code>torch.Size([64, 1, 2])
+</code></pre>
+<pre><code class="language-python">yb[0]
+</code></pre>
+<pre><code>TensorPoint([[0.0411, 0.0067]], device='cuda:0')
+</code></pre>
+<h4>Training a Model</h4>
+<pre><code class="language-python">learn = vision_learner(dls, resnet18, y_range=(-1,1))
+</code></pre>
+<pre><code>/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and will be removed in 0.15, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.9/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to /root/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth
+
+
+
+  0%|          | 0.00/44.7M [00:00&lt;?, ?B/s]
+</code></pre>
+<p><code>y_range</code> is implemented in fastai using <code>sigmoid_range</code>, which is defined as:</p>
+<pre><code class="language-python">def sigmoid_range(x, lo, hi): return torch.sigmoid(x) * (hi-lo) + lo
+</code></pre>
+<p>sigmoid_range effectivley bounds the output activations between -1 and 1 becuase they are coordinates on an axis with domain and range from -1 to 1.</p>
+<p>In the DataBlock, the PointBlock normalizes the coordinate labels between -1 and 1. So we need out output predictions to be on the same scale. </p>
+<p>The raw output logit can be anything. Say it's 5.
+x = 5, hi = 1, lo = -1</p>
+<pre><code class="language-python">sigmoid_range(tensor(5), lo = -1, hi = 1)
+</code></pre>
+<pre><code>tensor(0.9866)
+</code></pre>
+<pre><code class="language-python">sig = 1 / (1 + math.exp(-5))
+print(sig)
+</code></pre>
+<pre><code>0.9933071490757153
+</code></pre>
+<pre><code class="language-python">0.9933071490757153 * (1 - -1)
+</code></pre>
+<pre><code>1.9866142981514305
+</code></pre>
+<pre><code class="language-python">1.9866142981514305+(-1)
+</code></pre>
+<pre><code>0.9866142981514305
+</code></pre>
+<pre><code class="language-python">plot_function(partial(sigmoid_range,lo=-1,hi=1), min=-4, max=4)
+</code></pre>
+<pre><code>/home/jhoward/anaconda3/lib/python3.7/site-packages/fastbook/__init__.py:55: UserWarning: Not providing a value for linspace's steps is deprecated and will throw a runtime error in a future release. This warning will appear only once per process. (Triggered internally at  /pytorch/aten/src/ATen/native/RangeFactories.cpp:23.)
+  x = torch.linspace(min,max)
+</code></pre>
+<p><img alt="png" src="/images/112225_output_168_1.png" /></p>
+<p>Note: Why the partial function is needed:</p>
+<p>plot_function takes in three parameters only: (function f(x), x_min, x_max). </p>
+<p>Since plot_function only takes in f(x), we must fix the sigmoid_range() function with lo and hi parmeters. </p>
+<p>partial(sigmoid_range,lo=-1,hi=1) turns the function into f(x) = sigmoid_range(x,-1,1).</p>
+<p>If we don't use the partial function, we'll get an error because plot_function only expects one argument for f(x), not three (f(x), lo, and hi).</p>
+<p>We didn't specify a loss function, which means we're getting whatever fastai chooses as the default. Let's see what it picked for us:</p>
+<pre><code class="language-python">dls.loss_func
+</code></pre>
+<pre><code>FlattenedLoss of MSELoss()
+</code></pre>
+<p>The loss function here is Mean Squared Error loss.</p>
+<p>Find the optimal LR:</p>
+<pre><code class="language-python">learn.lr_find()
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<pre><code>SuggestedLRs(valley=0.0020892962347716093)
+</code></pre>
+<p><img alt="png" src="/images/112225_output_174_3.png" /></p>
+<p>Use LR of 1 x 10^-2.</p>
+<pre><code class="language-python">lr = 1e-2
+learn.fine_tune(3, lr)
+
+# phase 1 = deeper layers are frozen, head is trained for 1 epoch only by default
+# phase 2 = model is unfrozen and full model is trained for 3 epochs
+
+# fastai automatically applies discriminative learning rates in phase 2
+
+# we still need to find an optimal base learning rate since fastai scales discriminative learning rates based on the lr passed into fine_tune()
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.048639</td>
+      <td>0.013680</td>
+      <td>00:32</td>
+    </tr>
+  </tbody>
+</table>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0.007874</td>
+      <td>0.002583</td>
+      <td>00:40</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.003001</td>
+      <td>0.001029</td>
+      <td>00:40</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.001402</td>
+      <td>0.000077</td>
+      <td>00:40</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Find error</p>
+<pre><code class="language-python">math.sqrt(0.0001)
+</code></pre>
+<pre><code>0.01
+</code></pre>
+<p>See what results look like:</p>
+<pre><code class="language-python">learn.show_results(ds_idx=1, nrows=3, figsize=(6,8))
+</code></pre>
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<p><img alt="png" src="/images/112225_output_180_2.png" /></p>
+<footer>Built by an AI employee, reviewed by a human boss.</footer>
+</body></html>

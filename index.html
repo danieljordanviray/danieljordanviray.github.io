@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Fundamentals Lab &mdash; Daniel Jordan Viray</title>
+<meta property="og:title" content="AI Fundamentals Lab &mdash; Daniel Jordan Viray">
+<meta property="og:description" content="Hands-on notes on AI fundamentals &mdash; computer vision, deep learning, and shipping models. Real code, real images, written while learning to build AI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://danieljordanviray.github.io/">
+<meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Fundamentals Lab &mdash; Daniel Jordan Viray">
+<meta name="twitter:description" content="Hands-on notes on AI fundamentals &mdash; computer vision, deep learning, and shipping models. Real code, real images, written while learning to build AI.">
+<style>
+body { font-family: -apple-system, Georgia, serif; max-width: 760px; margin: 0 auto;
+       padding: 40px 18px; line-height: 1.7; color: #1a1a1a; }
+a { color: #1f6feb; }
+#filter { width: 100%; font-size: 1rem; padding: 10px 14px; border: 1px solid #ccc;
+          border-radius: 8px; margin: 18px 0 6px; font-family: inherit; box-sizing: border-box; }
+h2.cat { margin-top: 2em; border-bottom: 1px solid #ddd; padding-bottom: 6px; font-size: 1.25em; }
+.post { margin: 1em 0; }
+.post a.title { font-size: 1.1em; font-weight: 600; text-decoration: none; }
+.post a.title:hover { text-decoration: underline; }
+.post p { margin: 4px 0; color: #333; }
+.post .date { color: #888; font-size: 0.85em; }
+.soon { color: #888; font-style: italic; }
+.hidden { display: none; }
+#noresults { display: none; color: #555; margin-top: 2em; }
+.about { display: flex; gap: 18px; align-items: center; margin-top: 1em; }
+.about img { width: 120px; border-radius: 12px; flex-shrink: 0; }
+.about p { margin: 0; color: #333; }
+footer { margin-top: 3em; color: #888; font-size: 0.9em; border-top: 1px solid #ddd; padding-top: 1em; }
+</style></head><body>
+<h1>AI Fundamentals Lab</h1>
+<p><strong>by Daniel Jordan Viray.</strong> Hands-on notes on the fundamentals of
+artificial intelligence &mdash; computer vision, deep learning, and getting models
+into the real world. Every post walks through real code on real data and images,
+written while learning to build AI systems from the ground up.</p>
+
+<input id="filter" type="text" placeholder="Filter topics&hellip; (try &quot;vision&quot; or &quot;deploy&quot;)" aria-label="Filter topics">
+
+<div id="index">
+<section data-cat="computer-vision">
+<h2 class="cat">Computer Vision</h2>
+<div class="post"><a class="title" href="posts/removing-shadows-for-lane-detection/">Building a Self-Driving Car - Removing Shadows from Images to Prevent Lane Detection Errors</a><p class="date">June 2, 2025</p><p>Building a self-driving car, step one: strip shadows out of dashcam images so lane detection stops mistaking shadows for lane lines.</p></div>
+<div class="post"><a class="title" href="posts/lane-detection-hough-transform/">Building a Self-Driving Car - Lane Detection Using Hough Transform (Inferring Straight Lines in an Image)</a><p class="date">June 6, 2025</p><p>From a raw dashcam image to detected lane lines — using the Hough transform to infer straight lines from edge pixels.</p></div>
+<div class="post"><a class="title" href="posts/emotion-detection-from-faces/">Training an AI Model to Detect Human Emotions from Pictures of Faces</a><p class="date">September 25, 2025</p><p>A first hand-coded PyTorch model that reads human emotions from pictures of faces.</p></div>
+<div class="post"><a class="title" href="posts/multi-label-classification-regression/">Computer Vision AI Models: Multi-Label Classification and Regression</a><p class="date">November 22, 2025</p><p>Beyond single labels: multi-label classification and regression for computer vision, on real image data.</p></div>
+</section>
+<section data-cat="deep-learning">
+<h2 class="cat">Deep Learning</h2>
+<div class="post"><a class="title" href="posts/image-recognition-deep-learning/">Image Recognition Model Using Deep Learning - Car, Cyclist, or Tree?</a><p class="date">June 14, 2025</p><p>Car, cyclist, or tree? Training a deep learning image classifier from scratch.</p></div>
+<div class="post"><a class="title" href="posts/improving-ai-models/">Improving AI Models: Image Augmentation, Loss Function Engineering, and Fine-tuning Training Parameters</a><p class="date">November 9, 2025</p><p>A dog-breed classifier, made better: image augmentation, loss-function engineering, and fine-tuning training parameters.</p></div>
+<div class="post"><a class="title" href="posts/training-state-of-the-art-model/">Training a State-of-the-Art Model</a><p class="date">November 25, 2025</p><p>The techniques that take a computer vision model from decent to state-of-the-art, on Imagenette.</p></div>
+<div class="post"><a class="title" href="posts/custom-data-transformation-pipelines/">Data Munging with fastai&#x27;s Mid-Level API</a><p class="date">January 4, 2026</p><p>Writing custom data transforms with fastai&#x27;s mid-level API — a deeper look at the layered API.</p></div>
+</section>
+<section data-cat="shipping-models">
+<h2 class="cat">Shipping Models</h2>
+<div class="post"><a class="title" href="posts/deploying-deep-learning-web-app/">Deploying a Deep Learning Model as a Public Web Application</a><p class="date">June 22, 2025</p><p>From notebook to the internet: deploying a trained deep learning model as a public web app with Hugging Face and Gradio.</p></div>
+</section>
+<section data-cat="about">
+<h2 class="cat">About</h2>
+<div class="about">
+<img src="images/Nov_2025_Headshot.jpg" alt="Daniel Jordan Viray">
+<p>Daniel has been working professionally in data analytics since 2017. He is now
+leveraging his skills in math and data to build artificial intelligence. He holds
+bachelor&rsquo;s and master&rsquo;s degrees in economics from UCLA and Imperial College
+London. More at <a href="https://danieljordanviray.com">danieljordanviray.com</a>.</p>
+</div>
+</section>
+</div>
+<p id="noresults">No topics match that filter.</p>
+
+<footer>Built by an AI employee, reviewed by a human boss.</footer>
+
+<script>
+const input = document.getElementById("filter");
+input.addEventListener("input", () => {
+  const q = input.value.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll("#index section").forEach(sec => {
+    let secVisible = 0;
+    sec.querySelectorAll(".post").forEach(post => {
+      const hit = !q || post.textContent.toLowerCase().includes(q);
+      post.classList.toggle("hidden", !hit);
+      if (hit) secVisible++;
+    });
+    const soon = sec.querySelector(".soon");
+    if (soon) soon.classList.toggle("hidden", !!q);
+    const showSec = secVisible > 0 || (!q && soon);
+    sec.classList.toggle("hidden", !showSec);
+    if (showSec) visible++;
+  });
+  document.getElementById("noresults").style.display = visible ? "none" : "block";
+});
+</script>
+</body></html>

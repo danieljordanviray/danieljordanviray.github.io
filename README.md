@@ -1,3 +1,6 @@
-# Your blog
+# AI Fundamentals Lab
 
-This is the repository for your blog! Click *_config.yml* above to get started and fill in the details. Then click *index.md* and edit it to start creating your home page.
+Hands-on notes on AI fundamentals by Daniel Jordan Viray — computer vision, deep learning, and shipping models.
+
+Static site (no Jekyll), served from the repo root at https://danieljordanviray.github.io/.
+Rebuilt October 2026 from the original 2025–2026 blog posts, reformatted in the lab style.

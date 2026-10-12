@@ -5,7 +5,7 @@
 <meta property="og:title" content="Image Recognition Model Using Deep Learning - Car, Cyclist, or Tree? &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="Car, cyclist, or tree? Training a deep learning image classifier from scratch.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/image-recognition-deep-learning/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/image-recognition-deep-learning/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -31,7 +31,7 @@ a { color: #1f6feb; }
 <h1>Image Recognition Model Using Deep Learning - Car, Cyclist, or Tree?</h1>
 <p class="small">June 14, 2025 &middot; Deep Learning &middot; by Daniel Jordan Viray</p>
 
-<p><img alt="png" src="/images/061525output_42_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_42_0.png" /></p>
 <p>I’m currently fascinated by the idea of building autonomus systems (e.g., cars, drones, robots, etc.). One key aspect to building autonomous systems is computer vision -- how to train a computer to see like a human does.</p>
 <p>Hence, this post documents my first hands-on attempt at building an image detection model using deep learning. My goal wasn’t to create a state-of-the-art system, but to get my feet wet—to understand what it actually takes to teach a model to “see.”</p>
 <p>I focused on detecting key objects you'd expect on any road: cars, cyclists, and trees. From collecting and preparing data to training and testing the model, this was my entry point into the world of AI-powered perception.</p>
@@ -104,7 +104,7 @@ download_url(urls[1], dest)
 im = Image.open(dest)
 im.to_thumb(128,128)
 </code></pre>
-<p><img alt="png" src="/images/061525output_11_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_11_0.png" /></p>
 <h3>Download all images searching for 'car', 'bike', and 'tree'</h3>
 <pre><code class="language-python"># create list of search words for pixabay
 object_types = ['car','bike','tree']
@@ -238,15 +238,15 @@ def preview_images(object_type):
 <pre><code class="language-python"># preview car images
 preview_images('car')
 </code></pre>
-<p><img alt="png" src="/images/061525output_29_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_29_0.png" /></p>
 <pre><code class="language-python"># preview bike images
 preview_images('bike')
 </code></pre>
-<p><img alt="png" src="/images/061525output_30_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_30_0.png" /></p>
 <pre><code class="language-python"># preview runner images
 preview_images('tree')
 </code></pre>
-<p><img alt="png" src="/images/061525output_31_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_31_0.png" /></p>
 <p>Notice that most of the images are sensible. However, there are some images that are completely out of place. We will handle those later.</p>
 <p>Create fast.ai DataBlock object</p>
 <pre><code class="language-python">road_objects = DataBlock(
@@ -297,7 +297,7 @@ dls = road_objects.dataloaders(path)
 <pre><code class="language-python"># sample of items in dls
 dls.valid.show_batch(max_n=12, nrows=3)
 </code></pre>
-<p><img alt="png" src="/images/061525output_42_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_42_0.png" /></p>
 <h3>Data Augmentation</h3>
 <p>Resize the images using "RandomResizedCrop" method. I.e., Take random snap shots of the images at 128px, and recycle them. This will help train model by looking at images from different vantage points.</p>
 <p>Other resize methods include squishing and padding. However, padding will distort images to potentially unrealistic shapes, and padding is not computationally efficient.</p>
@@ -310,7 +310,7 @@ dls = road_objects.dataloaders(path)
 # unique = True means to recycle the image after it's cropped (i.e., data augmentation)
 dls.train.show_batch(max_n=12, nrows=3, unique=True)
 </code></pre>
-<p><img alt="png" src="/images/061525output_45_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_45_0.png" /></p>
 <p>More data augmentation: flipping, rotating, perspective warping, changing brightness/contrast, etc. This is useful for computer vision in self-driving cars, for example, because an object may look different under different conditions (e.g., rain, snow, shade, angles, night, etc.)</p>
 <pre><code class="language-python"># take random crops of the images without squishing them.
 # batch_tfms=aug_transforms(mult=2) augments the images
@@ -322,7 +322,7 @@ dls = road_objects.dataloaders(path)
 # unique = True means to recycle the image after it's cropped (i.e., data augmentation)
 dls.train.show_batch(max_n=12, nrows=3, unique=True)
 </code></pre>
-<p><img alt="png" src="/images/061525output_47_0.png" /></p>
+<p><img alt="png" src="../../images/061525output_47_0.png" /></p>
 <h3>Training Model &amp; Data Cleaning</h3>
 <pre><code class="language-python"># create dataloaders class
 # 224px, 50% min resized crop, data augmented
@@ -592,7 +592,7 @@ interp.plot_confusion_matrix()
     }
 </style>
 
-<p><img alt="png" src="/images/061525output_59_4.png" /></p>
+<p><img alt="png" src="../../images/061525output_59_4.png" /></p>
 <p>Assess where model is inaccurate by looking at images sort ordered by top loss</p>
 <pre><code class="language-python"># plot top losses
 # prediction / actual (target label) / loss / probability (i.e., model's confidence in prediction)
@@ -615,7 +615,7 @@ interp.plot_top_losses(6, nrows=2)
     }
 </style>
 
-<p><img alt="png" src="/images/061525output_61_2.png" /></p>
+<p><img alt="png" src="../../images/061525output_61_2.png" /></p>
 <p>Export model to create web app:</p>
 <pre><code class="language-python"># export model
 learn.export()

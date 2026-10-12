@@ -5,7 +5,7 @@
 <meta property="og:title" content="Building a Self-Driving Car - Lane Detection Using Hough Transform (Inferring Straight Lines in an Image) &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="From a raw dashcam image to detected lane lines — using the Hough transform to infer straight lines from edge pixels.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/lane-detection-hough-transform/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/lane-detection-hough-transform/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -31,7 +31,7 @@ a { color: #1f6feb; }
 <h1>Building a Self-Driving Car - Lane Detection Using Hough Transform (Inferring Straight Lines in an Image)</h1>
 <p class="small">June 6, 2025 &middot; Computer Vision &middot; by Daniel Jordan Viray</p>
 
-<p><img alt="png" src="/images/060625_output_37_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_37_0.png" /></p>
 <p><em>NB: Code adapted from Udemy's "The Complete Self-Driving Car Course - Applied Deep Learning course"</em></p>
 <p><em>NB: Some text and code generated with AI for speed and convenience.</em></p>
 <h5>In the Previous Blog Post:</h5>
@@ -65,7 +65,7 @@ def display_image(img, title):
 </code></pre>
 <pre><code class="language-python">display_image(raw,&quot;raw_image&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_9_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_9_0.png" /></p>
 <p>And here is what the Canny image looked like:</p>
 <pre><code class="language-python"># create canny function
 def canny(image):
@@ -99,7 +99,7 @@ def canny(image):
 canny_image = canny(raw)
 display_image(canny_image,&quot;canny_image&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_12_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_12_0.png" /></p>
 <p>Now, in this blog post, we are going to use this image to detect the traffic lane lines using the Hough Transform algorithm.</p>
 <h5>What is the Hough Transform Algorithm?</h5>
 <p>The Hough Transform is a classical algorithm in computer vision used to detect straight lines in images — it's especially useful when the lines are partially occluded, broken, or not perfectly continuous.</p>
@@ -147,7 +147,7 @@ masked_image = cv2.bitwise_and(canny_image, mask)
 # Display the result
 display_image(masked_image,&quot;region_of_interest&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_21_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_21_0.png" /></p>
 <p>Now, we'll feed in this cropped image into the Hough Transform algorithm function to detect the lines:</p>
 <pre><code class="language-python">lines = cv2.HoughLinesP(masked_image, 2, np.pi/180, 40, np.array([]), minLineLength=40, maxLineGap=100)
 </code></pre>
@@ -239,7 +239,7 @@ line_image = display_lines(canny_image, lines)
 
 display_image(line_image,&quot;line_image&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_28_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_28_0.png" /></p>
 <h5>Overlaying the Hough Transform Lines on the Canny Image</h5>
 <p>Now, let's overlay these lines onto the canny image:</p>
 <p>(Note: when combining images, images must be of the same dimensions and channel (i.e., RBG or grayscale)). </p>
@@ -290,14 +290,14 @@ canny_img_w_lines = cv2.addWeighted(cv2.cvtColor(canny_image, cv2.COLOR_GRAY2BGR
 <pre><code class="language-python"># display canny image with lines
 display_image(canny_img_w_lines,&quot;canny_img_w_lines&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_35_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_35_0.png" /></p>
 <p>Now, let's overlay the lines on the original image:</p>
 <pre><code class="language-python"># display raw image with lines
 raw_w_lines = cv2.addWeighted(raw, 0.75, line_image, 1, 1)
 
 display_image(raw_w_lines,&quot;raw_w_lines&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_37_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_37_0.png" /></p>
 <p>Now, we can see that the traffic lanes are detected. Especially notice the broken traffic line on the right. The Hough Transform algorithm inferred that this is a single, continuous line, just as a human would do.</p>
 <p>However, notice that there are multiple lines generated from the Hough Transform. We want to smooth out those lines into just a single line. Therefore, we will take the averages of these lines and create a singe line for each traffic line.</p>
 <h5>Averaging the Multiple Hough Transform Lines into One Line for Each Side</h5>
@@ -384,7 +384,7 @@ raw_w_avg_lines = cv2.addWeighted(raw, 0.65, average_line_image, 1, 1)
 </code></pre>
 <pre><code class="language-python">display_image(raw_w_avg_lines,&quot;raw_w_avg_lines&quot;)
 </code></pre>
-<p><img alt="png" src="/images/060625_output_45_0.png" /></p>
+<p><img alt="png" src="../../images/060625_output_45_0.png" /></p>
 <p>And there we have it! We've detected the traffic lanes using the Hough Transform algorithm!</p>
 <h5>Is Hough Transform Used in the Real-World? Limitations to Hough Transform</h5>
 <p>Now, we have one line each for the left and right lane. However, notice that the actual right traffic line is not perfectly straight in the image. It curves off towards the right up ahead. </p>

@@ -5,7 +5,7 @@
 <meta property="og:title" content="Data Munging with fastai&#x27;s Mid-Level API &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="Writing custom data transforms with fastai&#x27;s mid-level API — a deeper look at the layered API.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/custom-data-transformation-pipelines/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/custom-data-transformation-pipelines/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -30,7 +30,7 @@ a { color: #1f6feb; }
 <div class="topnav"><a href="../../index.html">&larr; AI Fundamentals Lab</a></div>
 <h1>Data Munging with fastai&#x27;s Mid-Level API</h1>
 <p class="small">January 4, 2026 &middot; Deep Learning &middot; by Daniel Jordan Viray</p>
-<p><img alt="png" src="/images/010426_output_137_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_137_0.png" /></p>
 <pre><code class="language-python">! pip install -Uqq fastbook
 import fastbook
 fastbook.setup_book()
@@ -562,31 +562,31 @@ class SiameseImage(fastuple): # create a new class, inheriting from fastuple (fa
 </code></pre>
 <pre><code class="language-python">PILImage.create(files[0])
 </code></pre>
-<p><img alt="png" src="/images/010426_output_116_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_116_0.png" /></p>
 <pre><code class="language-python">img = PILImage.create(files[0])
 </code></pre>
 <pre><code class="language-python">s = SiameseImage(img, img, True)
 s.show();
 </code></pre>
-<p><img alt="png" src="/images/010426_output_118_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_118_0.png" /></p>
 <pre><code class="language-python">PILImage.create(files[1])
 </code></pre>
-<p><img alt="png" src="/images/010426_output_119_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_119_0.png" /></p>
 <pre><code class="language-python">img1 = PILImage.create(files[1])
 s1 = SiameseImage(img, img1, False)
 s1.show();
 </code></pre>
-<p><img alt="png" src="/images/010426_output_120_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_120_0.png" /></p>
 <p>By using the fasttuple class/data structure, we can apply transformations (e.g., resize) on each element of the tuple.</p>
 <p>FastAI is smart enough to know that it doesn't apply to Boolean values.</p>
 <pre><code class="language-python">s2 = Resize(224)(s1)
 s2.show();
 </code></pre>
-<p><img alt="png" src="/images/010426_output_122_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_122_0.png" /></p>
 <pre><code class="language-python">s2 = Resize(50)(s1)
 s2.show();
 </code></pre>
-<p><img alt="png" src="/images/010426_output_123_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_123_0.png" /></p>
 <p>Ok, now what we're going to do is we're going to feed PAIRS of images + label (img1, img2, label) into the model for learning. Note that we're learning similarity, not classification. Therefore, we are not feeding individual images into the model. This is what we're TRANSFORMING. From individual images to pairs of images + labels.</p>
 <p>For the training images, we are going to randomly draw the second image with a 50/50 probability that it's in the same class. For the validiation image pairs, we are also going to use a 50/50 probability whether the image pair is in the same class, but we're going to fix these pairs for stability. </p>
 <p>For example, assume I have 100 images. 80 for training, 20 for validation. </p>
@@ -699,12 +699,12 @@ files.map(label_func).unique()
 tfm = SiameseTransform(files, label_func, splits)
 tfm(files[0]).show();
 </code></pre>
-<p><img alt="png" src="/images/010426_output_135_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_135_0.png" /></p>
 <p>Use TfmdLists to apply a pipeline of transforms since we already built the tuple. If we wanted to apply multiple pipelines of transforms in parallale to buil tupes, we would use Datasets.</p>
 <pre><code class="language-python">tls = TfmdLists(files, tfm, splits=splits)
 show_at(tls.valid, 0);
 </code></pre>
-<p><img alt="png" src="/images/010426_output_137_0.png" /></p>
+<p><img alt="png" src="../../images/010426_output_137_0.png" /></p>
 <pre><code class="language-python">dls = tls.dataloaders(after_item=[Resize(224), ToTensor], # ToTensor converts images to tensors (applied on every part of the tuple).
     after_batch=[IntToFloatTensor, Normalize.from_stats(*imagenet_stats)]) # IntToFloatTensor converts tensor of ints into tensor of floats and then divides by 255 to normalize pixels on 0-1 scale
 </code></pre>

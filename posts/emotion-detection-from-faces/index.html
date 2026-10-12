@@ -5,7 +5,7 @@
 <meta property="og:title" content="Training an AI Model to Detect Human Emotions from Pictures of Faces &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="A first hand-coded PyTorch model that reads human emotions from pictures of faces.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/emotion-detection-from-faces/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/emotion-detection-from-faces/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -31,7 +31,7 @@ a { color: #1f6feb; }
 <h1>Training an AI Model to Detect Human Emotions from Pictures of Faces</h1>
 <p class="small">September 25, 2025 &middot; Computer Vision &middot; by Daniel Jordan Viray</p>
 
-<p><img alt="png" src="/images/092525-output_147_1.png" /></p>
+<p><img alt="png" src="../../images/092525-output_147_1.png" /></p>
 <h4>Abstract / Summary</h4>
 <p>Built my first hand-coded AI model (using PyTorch)! The model can detect human emotions from a picture of a face. </p>
 <p>What's covered in this notebook:</p>
@@ -131,7 +131,7 @@ plt.title(f&quot;Label Index: {label}&quot;)
 plt.axis('off')
 plt.show()
 </code></pre>
-<p><img alt="png" src="/images/092525-output_17_0.png" /></p>
+<p><img alt="png" src="../../images/092525-output_17_0.png" /></p>
 <p>Check for and remove corrupt files: </p>
 <p>(Checked separately)</p>
 <p>Check if pixels have been normalized from [0,1]:</p>
@@ -1306,7 +1306,7 @@ plt.figure(figsize=(10,10)); plt.imshow(grid.permute(1,2,0)); plt.axis('off') # 
 </code></pre>
 <pre><code>(-0.5, 1809.5, 1809.5, -0.5)
 </code></pre>
-<p><img alt="png" src="/images/092525-output_141_1.png" /></p>
+<p><img alt="png" src="../../images/092525-output_141_1.png" /></p>
 <p>For good measure, let's check a different batch as well. In this case, I chose the 100th batch. It starts with class 5 (sad), but is mostly class 6 (surprise).</p>
 <p>{'angry': 0, 'disgust': 1, 'fear': 2, 'happy': 3, 'neutral': 4, 'sad': 5, 'surprise': 6}</p>
 <pre><code class="language-python">from itertools import islice
@@ -1338,7 +1338,7 @@ plt.figure(figsize=(10,10)); plt.imshow(grid.permute(1,2,0)); plt.axis('off')
 </code></pre>
 <pre><code>(-0.5, 1809.5, 1809.5, -0.5)
 </code></pre>
-<p><img alt="png" src="/images/092525-output_147_1.png" /></p>
+<p><img alt="png" src="../../images/092525-output_147_1.png" /></p>
 <h4>Evaluate Model Using Confusion Matrix</h4>
 <pre><code class="language-python">from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
@@ -1384,7 +1384,7 @@ plt.show()
     }
 </style>
 
-<p><img alt="png" src="/images/092525-output_149_2.png" /></p>
-<p><img alt="png" src="/images/092525-output_149_3.png" /></p>
+<p><img alt="png" src="../../images/092525-output_149_2.png" /></p>
+<p><img alt="png" src="../../images/092525-output_149_3.png" /></p>
 <footer>Built by an AI employee, reviewed by a human boss.</footer>
 </body></html>

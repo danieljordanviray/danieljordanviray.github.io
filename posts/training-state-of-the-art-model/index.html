@@ -5,7 +5,7 @@
 <meta property="og:title" content="Training a State-of-the-Art Model &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="The techniques that take a computer vision model from decent to state-of-the-art, on Imagenette.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/training-state-of-the-art-model/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/training-state-of-the-art-model/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -30,7 +30,7 @@ a { color: #1f6feb; }
 <div class="topnav"><a href="../../index.html">&larr; AI Fundamentals Lab</a></div>
 <h1>Training a State-of-the-Art Model</h1>
 <p class="small">November 25, 2025 &middot; Deep Learning &middot; by Daniel Jordan Viray</p>
-<p><img alt="png" src="/images/112525_output_36_0.png" /></p>
+<p><img alt="png" src="../../images/112525_output_36_0.png" /></p>
 <pre><code class="language-python">! pip install -Uqq fastbook
 import fastbook
 fastbook.setup_book()
@@ -531,7 +531,7 @@ show_image(tchurch, ax=axs[0]);
 show_image(tgas, ax=axs[1]);
 show_image((0.3*tchurch + 0.7*tgas), ax=axs[2]);
 </code></pre>
-<p><img alt="png" src="/images/112525_output_36_0.png" /></p>
+<p><img alt="png" src="../../images/112525_output_36_0.png" /></p>
 <h3>Label Smoothing</h3>
 <p>The idea behind label smoothing is that output probabilities are never exactly 1 or 0. I.e., the sigmoid function asymptotes at 1 or 0 but never reaches these values. To approximate 1 or 0, the model must push the logits to the extreme, toward infinity or negative infinity. But we don't want that. That makes the model unstable and difficult to take the gradient. Therefore, the solution is to use label smoothing. I.e., create ground-truth labels that approximate the correct level of confidence in the labels, but removes that absolute certainty of 1 or 0. Mathematically, these labels are within the range of the sigmoid function. Therefore, the model wouldn't push parameters/weights towards the extremes.</p>
 <pre><code class="language-python"># Mathmatically, how it works:

@@ -5,7 +5,7 @@
 <meta property="og:title" content="Improving AI Models: Image Augmentation, Loss Function Engineering, and Fine-tuning Training Parameters &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="A dog-breed classifier, made better: image augmentation, loss-function engineering, and fine-tuning training parameters.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/improving-ai-models/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/improving-ai-models/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -31,7 +31,7 @@ a { color: #1f6feb; }
 <h1>Improving AI Models: Image Augmentation, Loss Function Engineering, and Fine-tuning Training Parameters</h1>
 <p class="small">November 9, 2025 &middot; Deep Learning &middot; by Daniel Jordan Viray</p>
 
-<p><img alt="png" src="/images/110925-output_13_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_13_0.png" /></p>
 <p>Just completed my next project in learning how to build and engineer AI systems! In this notebook, I built an AI model that classifies dog breeds from images with up to 95% accuracy. Technically, this project explores core AI-engineering optimization techniques: image augmentation, loss-function mathematics, and fine-tuning training parameters.</p>
 <h4>Table of Contents</h4>
 <ul>
@@ -102,7 +102,7 @@ for ax, img, f in zip(axes.flatten(), images, files):
 plt.tight_layout()
 plt.show()
 </code></pre>
-<p><img alt="png" src="/images/110925-output_13_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_13_0.png" /></p>
 <p>Test RegEx to extract labels from file names:</p>
 <pre><code class="language-python">fname = (path/&quot;images&quot;).ls()[0]
 fname
@@ -164,7 +164,7 @@ dls.train_ds
 <pre><code class="language-python"># stored as tuples (image, category)
 dls.train_ds[0][0] # index first tuple, first element in tuple (image)
 </code></pre>
-<p><img alt="png" src="/images/110925-output_26_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_26_0.png" /></p>
 <pre><code class="language-python"># check shape of image in dls before any transformation
 dls.train_ds[0][0].shape
 </code></pre>
@@ -190,7 +190,7 @@ print(xb_train.shape)
 <pre><code class="language-python"># view data augmentation in training set
 dls.show_batch((xb, yb))
 </code></pre>
-<p><img alt="png" src="/images/110925-output_30_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_30_0.png" /></p>
 <pre><code class="language-python"># check dimensions of resized batched images in validation set
 # 64 images, 3 channels (RBG), 224px x 224 px
 xb_valid, yb_valid = dls.valid.one_batch()
@@ -206,7 +206,7 @@ plt.rcParams['axes.titlesize'] = 6
 
 dls.show_batch((xb_valid, yb_valid), max_n=24, figsize=(8,8))
 </code></pre>
-<p><img alt="png" src="/images/110925-output_32_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_32_0.png" /></p>
 <h4>Debugging Data Loaders</h4>
 <p>Check train/valid split:</p>
 <pre><code class="language-python"># check training / validation split (counts)
@@ -479,7 +479,7 @@ preds[0].sum()
 # softmax is similar to sigmoid, but for multi-class classification
 plot_function(torch.sigmoid, min=-4,max=4)
 </code></pre>
-<p><img alt="png" src="/images/110925-output_60_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_60_0.png" /></p>
 <p>Here is a toy example -- there are six images in a binary classification problem:</p>
 <pre><code class="language-python"># example: 6 images, 2 possible categories, std dev of 2 (so multiply rand by 2)
 torch.random.manual_seed(42);
@@ -667,7 +667,7 @@ F.nll_loss(sm_acts, labels, reduction='none')
 # PyTorch log is log base e
 plot_function(torch.log, min=0,max=1, ty='log(x) (loss)', tx='x (probability)')
 </code></pre>
-<p><img alt="png" src="/images/110925-output_83_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_83_0.png" /></p>
 <p>For prediction purposes, assume true label = 1. </p>
 <p>When x -&gt; 0 (predicted probability), we want loss function to be high (inf) </p>
 <p>And when x -&gt; 1 (predicted probability), we want loss function to be low (close of 0).</p>
@@ -676,7 +676,7 @@ plot_function(torch.log, min=0,max=1, ty='log(x) (loss)', tx='x (probability)')
 # we take negative log function so that when prob -&gt; 1, loss -&gt; 0; when prob -&gt; 0, loss -&gt; inf
 plot_function(lambda x: -1*torch.log(x), min=0,max=1, tx='x (probability)', ty='- log(x) (loss)', title = 'Log Loss when true label = 1')
 </code></pre>
-<p><img alt="png" src="/images/110925-output_85_0.png" /></p>
+<p><img alt="png" src="../../images/110925-output_85_0.png" /></p>
 <p>Here is the updated table with the calculated Loss (the log of the predicted label):</p>
 <pre><code class="language-python">from IPython.display import HTML
 from IPython.display import display
@@ -960,7 +960,7 @@ interp.plot_confusion_matrix(figsize=(12,12), dpi=60)
     }
 </style>
 
-<p><img alt="png" src="/images/110925-output_121_4.png" /></p>
+<p><img alt="png" src="../../images/110925-output_121_4.png" /></p>
 <p>Obtain the top N most confused classes for easier interpretation:</p>
 <pre><code class="language-python">interp.most_confused(min_val=5)
 </code></pre>
@@ -1090,7 +1090,7 @@ lr_min,lr_steep = learn.lr_find(suggest_funcs=(minimum, steep))
     }
 </style>
 
-<p><img alt="png" src="/images/110925-output_129_2.png" /></p>
+<p><img alt="png" src="../../images/110925-output_129_2.png" /></p>
 <pre><code class="language-python">print(f&quot;Minimum/10: {lr_min:.2e}, steepest point: {lr_steep:.2e}&quot;)
 </code></pre>
 <pre><code>Minimum/10: 1.00e-02, steepest point: 4.37e-03
@@ -1219,7 +1219,7 @@ learn.fit_one_cycle(3, 3e-3)
 
 <pre><code>SuggestedLRs(valley=5.248074739938602e-05)
 </code></pre>
-<p><img alt="png" src="/images/110925-output_141_3.png" /></p>
+<p><img alt="png" src="../../images/110925-output_141_3.png" /></p>
 <p>Train for 6 epochs with max learning rate:</p>
 <pre><code class="language-python">learn.fit_one_cycle(6, lr_max=1e-5)
 </code></pre>
@@ -1473,7 +1473,7 @@ learn.fit_one_cycle(12, lr_max=slice(1e-6,1e-4))
 </code></pre>
 <pre><code>&lt;Axes: title={'center': 'learning curve'}, xlabel='steps', ylabel='loss'&gt;
 </code></pre>
-<p><img alt="png" src="/images/110925-output_148_1.png" /></p>
+<p><img alt="png" src="../../images/110925-output_148_1.png" /></p>
 <h4>Selecting the Number of Epochs</h4>
 <p>Problem: How many epochs to train for?</p>
 <p>Considerations:</p>

@@ -5,7 +5,7 @@
 <meta property="og:title" content="Deploying a Deep Learning Model as a Public Web Application &mdash; AI Fundamentals Lab">
 <meta property="og:description" content="From notebook to the internet: deploying a trained deep learning model as a public web app with Hugging Face and Gradio.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://danieljordanviray.github.io/posts/deploying-deep-learning-web-app/">
+<meta property="og:url" content="https://danieljordanviray.github.io/ai-fundamentals-lab/posts/deploying-deep-learning-web-app/">
 <meta property="og:image" content="https://danieljordanviray.com/portrait.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -43,35 +43,35 @@ im_car = PILImage.create(car_path)
 im_car.thumbnail((192,192))
 im_car
 </code></pre>
-<p><img alt="png" src="/images/062225output_2_0.png" /></p>
+<p><img alt="png" src="../../images/062225output_2_0.png" /></p>
 <pre><code class="language-python"># display image of bike
 bike_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/bike.jpg'
 im_bike = PILImage.create(bike_path)
 im_bike.thumbnail((192,192))
 im_bike
 </code></pre>
-<p><img alt="png" src="/images/062225output_3_0.png" /></p>
+<p><img alt="png" src="../../images/062225output_3_0.png" /></p>
 <pre><code class="language-python"># display image of tree
 tree_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/tree.jpg'
 im_tree = PILImage.create(tree_path)
 im_tree.thumbnail((192,192))
 im_tree
 </code></pre>
-<p><img alt="png" src="/images/062225output_4_0.png" /></p>
+<p><img alt="png" src="../../images/062225output_4_0.png" /></p>
 <pre><code class="language-python"># display image of all three - (i.e., ambigious)
 all_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/all.jpg'
 im_all = PILImage.create(all_path)
 im_all.thumbnail((192,192))
 im_all
 </code></pre>
-<p><img alt="png" src="/images/062225output_5_0.png" /></p>
+<p><img alt="png" src="../../images/062225output_5_0.png" /></p>
 <pre><code class="language-python"># display image of flower
 flower_path = '/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/flower.jpg'
 im_flower = PILImage.create(flower_path)
 im_flower.thumbnail((192,192))
 im_flower
 </code></pre>
-<p><img alt="png" src="/images/062225output_6_0.png" /></p>
+<p><img alt="png" src="../../images/062225output_6_0.png" /></p>
 <p>Import deep learning model:</p>
 <pre><code class="language-python"># import previously trained model (.pkl)
 learn = load_learner('/content/drive/MyDrive/AI Projects/gradio_model_deployment_1/export.pkl')
